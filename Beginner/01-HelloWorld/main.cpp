@@ -27,5 +27,9 @@ int main(int argc, char *argv[])
   cin >> age;
   qInfo() << "Age : " << age;
 
+  // C++ Standard Error
+  cerr << "Standard Error";
+
+
   return a.exec();
 }
