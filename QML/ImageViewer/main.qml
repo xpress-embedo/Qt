@@ -36,7 +36,7 @@ Window {
         clickColor: root.clickColor
         area.onPressed:
         {
-          image.source = "https://upload.wikimedia.org/wikipedia/commons/b/b6/Felis_catus-cat_on_snow.jpg"
+          image.source = "qrc:/Image/Cat.png"
         }
       }
 
@@ -50,7 +50,7 @@ Window {
         clickColor: root.clickColor
         area.onPressed:
         {
-          image.source = "https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg"
+          image.source = "qrc:/Image/Dog.png"
         }
       }
 
@@ -64,7 +64,7 @@ Window {
         clickColor: root.clickColor
         area.onPressed:
         {
-          image.source = "https://upload.wikimedia.org/wikipedia/commons/9/9f/D_Terrelli.png"
+          image.source = "qrc:/Image/Fish.png"
         }
       }
     }
@@ -86,9 +86,7 @@ Window {
       anchors.margins: 25
       anchors.fill: parent
       fillMode: Image.PreserveAspectFit
-      // TODO: need to investigate how to use local images with QML with CMake
-      // source: "\img\Cat.jpg"
-      source: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Felis_catus-cat_on_snow.jpg"
+      source: "qrc:/Image/Cat.png"
     }
   }
 }
