@@ -39,8 +39,22 @@ Window {
 
   Dial {
     id: dial
-    x: 88
-    y: 190
+    x: 20
+    y: 172
+    width: 161
+    height: 136
+
+    Label {
+      id: lblDial
+      text: qsTr("0")
+      anchors.verticalCenter: parent.verticalCenter
+      horizontalAlignment: Text.AlignHCenter
+      verticalAlignment: Text.AlignVCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+    }
+    onMoved: {
+      lblDial.text = Math.round(dial.value*100);
+    }
   }
 
   Label {
