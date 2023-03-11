@@ -98,4 +98,46 @@ Window {
       }
     }
   }
+
+  Row {
+    id: row
+    y: 395
+    width: parent.width
+    height: 85
+    spacing: 25
+    anchors.horizontalCenter: parent.horizontalCenter
+
+    DelayButton {
+      id: delayButtonDeleteEveryThing
+      width: 130
+      height: 40
+      delay: 1000
+      text: qsTr("Delay Everything");
+      icon.color: "#ffffff"
+      onActivated: {
+        lblDelayButton.text = "Done";
+        delayButtonDeleteEveryThing.text = "BOOOM";
+        console.log("Delay Button Activated");
+      }
+      onProgressChanged: {
+        lblDelayButton.text = Math.round(progress*100)
+        console.log("Delay Button Progress Changed");
+        if( progress === 0 ) {
+          delayButtonDeleteEveryThing.text = "Delete Everything";
+          lblDelayButton.text = "Status"
+        }
+      }
+    }
+
+    Label {
+      id: lblDelayButton
+      width: 130
+      height: 40
+      color: "black"
+      text: qsTr("Status")
+      horizontalAlignment: Text.AlignHCenter
+      font.bold: true
+      font.pointSize: 25
+    }
+  }
 }
