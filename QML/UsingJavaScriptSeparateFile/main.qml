@@ -9,6 +9,12 @@ Window {
   visible: true
   title: qsTr("Hello World")
 
+  Component.onCompleted: {
+    Code.startup( root, box);
+    // JavaScript Connection
+    area.clicked.connect( Code.clicked );
+  }
+
   Rectangle {
     id: box
     color: Code.swapColor(area)
@@ -20,7 +26,8 @@ Window {
     MouseArea {
       id: area
       anchors.fill: parent
-      onClicked: Code.performClick(root, box)
+      // Comment because we are using JavaScript QML Connections
+      // onClicked: Code.performClick(root, box)
     }
   }
 }
