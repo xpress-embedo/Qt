@@ -1,6 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+// Step-1: Import
+#include <QQmlContext>
+#include "test.h"
+
 // Entry Point of the Application
 int main(int argc, char *argv[])
 {
@@ -12,6 +16,12 @@ int main(int argc, char *argv[])
 
   // The QML Engine
   QQmlApplicationEngine engine;
+
+  // Step-2: Add Engine to Root Context
+  // Basically here we are creating an instance of our class and then
+  // shove it in the context property.
+  Test test;
+  engine.rootContext()->setContextProperty("testing", &test);
 
   // The URL of the QML File, note this is a complied resource
   const QUrl url(u"qrc:/QMLCppIntro/main.qml"_qs);

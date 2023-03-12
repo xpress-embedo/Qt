@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 6.2 COMPONENTS Quick REQUIRED)
 
 qt_add_executable(appQMLCppIntro
-    main.cpp
+    main.cpp test.h test.cpp
 )
 
 qt_add_qml_module(appQMLCppIntro
