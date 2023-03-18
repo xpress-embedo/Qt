@@ -9,8 +9,6 @@ Window {
 
   Popup {
     id: popup
-    width: 200
-    height: 200
     anchors.centerIn: parent
     modal: true
     focus: true
