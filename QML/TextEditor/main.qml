@@ -1,7 +1,8 @@
 import QtQuick
-import QtQuick.Controls 6.2
-import QtQuick.Window 6.2
-import QtQuick.Dialogs 6.2
+import QtQuick.Controls
+import QtQuick.Window
+import QtQuick.Dialogs
+import Qt.labs.platform as Platform
 
 import BackEnd 1.0
 
@@ -17,33 +18,29 @@ ApplicationWindow {
       console.log("Path: ", path);
     }
     onDataChanged: {
-      console.log("Data: ", data);
+      console.log("Path: ", path);
     }
   }
 
   FileDialog {
     id: openDialog
     title: "Please Choose a file!"
-    // folder: shortcuts.home
-    // selectMultiple: false
-    // selectExisting: true
+    fileMode: FileDialog.OpenFile
 
     onAccepted: {
-      backend.path = openDialog.fileUrl;
-      // update the editor todo
+      backend.path = openDialog.selectedFile;
+      editor.text = backend.data;
     }
   }
 
   FileDialog {
     id: saveDialog
     title: "Please Choose a file!"
-    // folder: shortcuts.home
-    // selectMultiple: false
-    // selectExisting: false
+    fileMode: FileDialog.SaveFile
 
     onAccepted: {
-      backend.path = openDialog.fileUrl;
-      // update the backend todo
+      backend.path = openDialog.selectedFile;
+      backend.data = editor.text;
     }
   }
 
@@ -54,9 +51,101 @@ ApplicationWindow {
     icon.source: "qrc:/images/images/oNew.png"
 
     onTriggered: {
-
+      editor.clear();
     }
   }
+
+  Action {
+    id: actionOpen
+    text: qsTr("Open")
+    icon.color: "transparent"
+    icon.source: "qrc:/images/images/oOpen.png"
+
+    onTriggered: {
+      openDialog.open();
+    }
+  }
+
+  Action {
+    id: actionSave
+    text: qsTr("Save")
+    icon.color: "transparent"
+    icon.source: "qrc:/images/images/oSave.png"
+
+    onTriggered: {
+      saveDialog.open();
+    }
+  }
+
+  Action {
+    id: actionCopy
+    text: qsTr("Copy")
+    icon.color: "transparent"
+    icon.source: "qrc:/images/images/oCopy.png"
+
+    onTriggered: {
+      editor.copy();
+    }
+  }
+
+  Action {
+    id: actionCut
+    text: qsTr("Cut")
+    icon.color: "transparent"
+    icon.source: "qrc:/images/images/oCut.png"
+
+    onTriggered: {
+      editor.cut();
+    }
+  }
+
+  Action {
+    id: actionPaste
+    text: qsTr("Paste")
+    icon.color: "transparent"
+    icon.source: "qrc:/images/images/oPaste.png"
+
+    onTriggered: {
+      editor.paste();
+    }
+  }
+
+
+
+  menuBar: MenuBar {
+    Menu {
+      id: menuFile
+      title: qsTr("&File")
+      Action { text: qsTr("&New") }
+      Action { text: qsTr("&Open") }
+      Action { text: qsTr("&Save") }
+      MenuSeparator {}
+      Action { text: qsTr("&Quit") }
+    }
+    Menu {
+      id: menuEdit
+      title: qsTr("Edit")
+      Action { text: qsTr("C&ut") }
+      Action { text: qsTr("&Copy") }
+      Action { text: qsTr("&Paste") }
+    }
+    Menu {
+      title: qsTr("&Help")
+      Action { text: qsTr("&About") }
+    }
+  }
+
+  header: ToolBar {
+    Row {
+      ToolButton { display: AbstractButton.IconOnly; action: actionNew }
+      ToolButton { display: AbstractButton.IconOnly; action: actionOpen }
+      ToolButton { display: AbstractButton.IconOnly; action: actionSave }
+      ToolButton { display: AbstractButton.IconOnly; action: actionCopy }
+      ToolButton { display: AbstractButton.IconOnly; action: actionCut }
+      ToolButton { display: AbstractButton.IconOnly; action: actionPaste }
+    }
+  }
+
 
   ScrollView {
     anchors.fill: parent
