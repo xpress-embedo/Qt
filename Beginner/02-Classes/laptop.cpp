@@ -4,20 +4,21 @@
 Laptop::Laptop(QObject *parent, QString name)
   : QObject{parent}
 {
-
+  qInfo() << this << " Constructor " << name;
 }
 
-Laptop::~Laptop()
+Laptop::~Laptop( void )
 {
-
+  qInfo() << this << " Deconstructor " << name;
 }
 
-inline double Laptop::asKilo()
+double Laptop::asKilo( void )
 {
-
+  // convert pounds to kilograms
+  return weight * 0.453592;
 }
 
-void Laptop::test()
+void Laptop::test( void )
 {
-
+  qInfo() << this << " Test: " << name << " Kilo: " << asKilo();
 }

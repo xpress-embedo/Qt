@@ -11,10 +11,14 @@ public:
   explicit Laptop(QObject *parent = nullptr, QString name="");
   // Deconstructor
   ~Laptop();
+
+  // Public Members
   int weight;
   QString name;
-  double asKilo();
-  void test();
+
+  // Public Methods
+  double asKilo( void );
+  void test( void );
 
 signals:
 
