@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/oSave.png</file>
+        <file>images/oPaste.png</file>
+        <file>images/oOpen.png</file>
+        <file>images/oNew.png</file>
+        <file>images/oCut.png</file>
+        <file>images/oCopy.png</file>
+    </qresource>
+</RCC>
