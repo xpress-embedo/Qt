@@ -18,6 +18,7 @@ public slots:
 
 private:
   QTimer m_timer;
+  int count;
 };
 
 #endif // TEST_H

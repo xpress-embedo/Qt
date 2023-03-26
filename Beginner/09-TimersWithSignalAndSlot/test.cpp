@@ -7,9 +7,16 @@ Test::Test(QObject *parent) : QObject{parent}
   // Start Timer configured @ 1sec
   m_timer.setInterval(1000);
   m_timer.start();
+  count = 0;
 }
 
 void Test::timeout()
 {
   qInfo() << "Test!";
+  count++;
+  if( count >= 3 )
+  {
+    // Stop the timer after 3 seconds
+    m_timer.stop();
+  }
 }
