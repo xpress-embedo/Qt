@@ -43,7 +43,11 @@ int main(int argc, char *argv[])
   QCoreApplication::setOrganizationDomain("embeddedlaboratory.com");
   QCoreApplication::setApplicationName("QSetting Testing");
 
-  QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName() );
+  QString filename = a.applicationDirPath() + "/settings.ini";
+  qInfo() << filename;
+
+  // QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName() );
+  QSettings settings( filename, QSettings::Format::IniFormat );
 
   saveAge( &settings, "people", "Bryan", 44 );
   saveAge( &settings, "beer", "twoheart", 1 );
