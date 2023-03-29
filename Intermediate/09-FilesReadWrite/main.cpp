@@ -34,5 +34,21 @@ int main(int argc, char *argv[])
     qInfo() << file.errorString();
   }
 
+  qInfo() << "Reading the file";
+  qInfo() << "Exists:" << file.exists();
+
+  // Reading File Content
+  if( file.open(QIODevice::ReadOnly) )
+  {
+    // Read the entire file (use cautiously, big files takes time, & can crash)
+    qInfo() << file.readAll();
+    file.close();
+  }
+  else
+  {
+    // Unable to open the file in reading mode, print the error
+    qInfo() << file.errorString();
+  }
+
   return a.exec();
 }
