@@ -10,7 +10,8 @@ int main(int argc, char *argv[])
   const QString filename = "test.txt";
 
   QFile file(filename);
-  if( file.open(QIODevice::WriteOnly) )
+  // if( file.open(QIODevice::WriteOnly) )    // this will always overwrite the file
+  if( file.open(QIODevice::Append) )          // this will append the file
   {
     QString now = QDateTime::currentDateTime().toString();
     QByteArray data;
@@ -19,6 +20,7 @@ int main(int argc, char *argv[])
     data.append("Hello World");
 
     file.write(data);
+    file.write("\r\n");
     // file.flush()   // no need to do this as file.close will automatically do this
 
     // close the final
