@@ -15,6 +15,30 @@ void list( QDir &root )
   }
 }
 
+void listAll( QDir &root )
+{
+  qInfo() << "-----Listing-----";
+  foreach( QFileInfo file, root.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot, QDir::Name) )
+  {
+    if( file.isDir() )
+    {
+      qInfo() << "Dir" << file.absoluteFilePath();
+    }
+    if( file.isFile() )
+    {
+      qInfo() << "File" << file.absoluteFilePath();
+    }
+
+    if( file.isDir() )
+    {
+      QDir child(file.filePath());
+      qInfo() << "Inspecting:" << child.absolutePath();
+      // This is Recursive function call
+      listAll(child);
+    }
+  }
+}
+
 int main(int argc, char *argv[])
 {
   QCoreApplication a(argc, argv);
@@ -26,15 +50,17 @@ int main(int argc, char *argv[])
   dir.cdUp();   // one directory up
   qInfo() << dir.absolutePath();
 
-  list(dir);
+//  list(dir);
 
-  // Make a folder
-  dir.mkdir("test_folder");
-  list(dir);
+//  // Make a folder
+//  dir.mkdir("test_folder");
+//  list(dir);
 
-  // Delete the folder (directory must be empty), use dir.rmpath
-  dir.rmdir("test_folder");
-  list(dir);
+//  // Delete the folder (directory must be empty), use dir.rmpath
+//  dir.rmdir("test_folder");
+//  list(dir);
+
+  listAll(dir);
 
   return a.exec();
 }
