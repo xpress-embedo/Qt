@@ -14,6 +14,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     y[i] = x[i]*x[i]; // let's plot a quadratic function
   }
 
+  // ui->customPlot is the pointer to the QCustomPlot instance
+  // create graph
+  ui->customPlot->addGraph();
+
   // Changing the Look of the Graph
   // Line Style (QCPGraph::lsLine, QCPGraph::lsStepLeft etc..)
   ui->customPlot->graph(0)->setLineStyle( QCPGraph::lsLine );
@@ -23,9 +27,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
   // Fills under graph or between two graphs
   ui->customPlot->graph(0)->setBrush( QBrush(QColor(0, 0x8B, 0x8B, 50) ) );   // dark cyan color with 20 value for alpha channel
 
-  // ui->customPlot is the pointer to the QCustomPlot instance
-  // create graph and assign data to it:
-  ui->customPlot->addGraph();
+  // assign data to the graph
   ui->customPlot->graph(0)->setData(x, y);
 
   // give the axes some labels:
