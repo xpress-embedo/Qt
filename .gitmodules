@@ -1,0 +1,3 @@
+[submodule "ThirdParty/QCustomPlot"]
+	path = ThirdParty/QCustomPlot
+	url = git@github.com:leger50/QCustomPlot-library.git
