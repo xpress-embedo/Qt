@@ -14,10 +14,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     y[i] = x[i]*x[i]; // let's plot a quadratic function
   }
 
+  // Changing the Look of the Graph
+  // Line Style (QCPGraph::lsLine, QCPGraph::lsStepLeft etc..)
+  ui->customPlot->graph(0)->setLineStyle( QCPGraph::lsLine );
+  // Line Pen (All pens the QFainter-framework provides are available, e.g
+  // solid, dashed
+  ui->customPlot->graph(0)->setPen( QPen(Qt::darkCyan) );
+  // Fills under graph or between two graphs
+  ui->customPlot->graph(0)->setBrush( QBrush(QColor(0, 0x8B, 0x8B, 50) ) );   // dark cyan color with 20 value for alpha channel
+
   // ui->customPlot is the pointer to the QCustomPlot instance
   // create graph and assign data to it:
   ui->customPlot->addGraph();
   ui->customPlot->graph(0)->setData(x, y);
+
   // give the axes some labels:
   ui->customPlot->xAxis->setLabel("x");
   ui->customPlot->yAxis->setLabel("y");
