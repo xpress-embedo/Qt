@@ -17,35 +17,34 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
   double now = QDateTime::currentDateTime().toSecsSinceEpoch();
   // Set the random seed, so we always get the same random data
   srand(8);
-  // Create graphs (later we can create multiple graphs also
 
-  QColor color("red");
-  ui->customPlot->addGraph();
-  ui->customPlot->graph()->setLineStyle(QCPGraph::lsLine);
-  ui->customPlot->graph()->setPen(QPen(color.lighter(200)));
-  ui->customPlot->graph()->setBrush(QBrush(color));
-
-  // Generate Random data
-  QList<QCPGraphData> timeData(250);
-  for( int idx=0; idx<250; idx++ )
+  // Create Mutiple Graphs
+  for( int gi=0; gi<5; gi++ )
   {
-    timeData[idx].key = now + 24*60*60*idx;   // current time + (1 day * idx)
+    // QColor color("red");
+    QColor color(20+200/4.0*gi,70*(1.6-gi/4.0), 150, 150);
+    ui->customPlot->addGraph();
+    ui->customPlot->graph()->setLineStyle(QCPGraph::lsLine);
+    ui->customPlot->graph()->setPen(QPen(color.lighter(200)));
+    ui->customPlot->graph()->setBrush(QBrush(color));
 
-    // Documentation Code Starts
-    int gi = 0;   // to be used with multiple graphs
-    if (idx == 0)
+    // Generate Random data
+    QList<QCPGraphData> timeData(250);
+    for( int idx=0; idx<250; idx++ )
     {
-      timeData[idx].value = (idx/50.0+1)*(rand()/(double)RAND_MAX-0.5);
-    }
-    else
-    {
-      timeData[idx].value = qFabs(timeData[idx-1].value)*(1+0.02/4.0*(4-gi)) + (idx/50.0+1)*(rand()/(double)RAND_MAX-0.5);
-    }
-    // Documentation Code End
+      timeData[idx].key = now + 24*60*60*idx;   // current time + (1 day * idx)
 
-    // timeData[idx].value = idx * QRandomGenerator::global()->bounded(0, 10);
+      if (idx == 0)
+      {
+        timeData[idx].value = (idx/50.0+1)*(rand()/(double)RAND_MAX-0.5);
+      }
+      else
+      {
+        timeData[idx].value = qFabs(timeData[idx-1].value)*(1+0.02/4.0*(4-gi)) + (idx/50.0+1)*(rand()/(double)RAND_MAX-0.5);
+      }
+    }
+    ui->customPlot->graph()->data()->set( timeData );
   }
-  ui->customPlot->graph()->data()->set( timeData );
 
   // Configure Bottom Axis to show date instead of number
   QSharedPointer<QCPAxisTickerDateTime> dateTicker(new QCPAxisTickerDateTime);
