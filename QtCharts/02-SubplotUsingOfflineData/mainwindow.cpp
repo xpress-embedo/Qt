@@ -118,7 +118,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     /* Note: why I didn't used
     * QVBoxLayout *layout = new QVBoxLayout(ui->centralwidget);
     * this->setLayout( layout );
-    * The reason is simple, if I use the central widget then when let's say
+    * The reason is simple, if I use the centeral widget then when let's say
     * I added few more widgets to screen, let's say two push button
     * Since these two buttons are also on the centeral widget hence they will
     * hide below this plot, as this plot is covering everything.
