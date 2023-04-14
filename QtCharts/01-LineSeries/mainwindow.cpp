@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   chartView->setRenderHint(QPainter::Antialiasing);
   chartView->setParent(ui->frame);
+  chartView->setMinimumSize( ui->frame->size() );
 }
 
 MainWindow::~MainWindow()
