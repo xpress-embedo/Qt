@@ -90,7 +90,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     }
 
     QCPGraph *bottomGraph = ui->customPlot->addGraph( bottomAxisRect->axis(QCPAxis::atBottom), bottomAxisRect->axis(QCPAxis::atLeft) );
-    bottomGraph->setPen(QPen(QColor(255, 120, 120), 2));
+    bottomGraph->setPen(QPen(QColor(255, 0, 0)));
+    bottomGraph->setBrush(QBrush(QColor(255, 120, 120, 50)));
 
     bottomGraph->setData( timeData, temperatureData );
     // The following methods are for auto rescaling
@@ -104,6 +105,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     QSharedPointer<QCPAxisTickerDateTime> dateTimeTicker( new QCPAxisTickerDateTime);
     dateTimeTicker->setDateTimeFormat("hh:mm:ss");
     bottomGraph->keyAxis()->setTicker( dateTimeTicker );
+    // Labelling axis
+    bottomGraph->keyAxis()->setLabel( "Time Axis");
+    bottomGraph->valueAxis()->setLabel( "Temperature Value" );
 
     QCPGraph *topGraph = ui->customPlot->addGraph( topAxisRect->axis(QCPAxis::atBottom), topAxisRect->axis(QCPAxis::atLeft) );
     topGraph->setData( timeData, adcData );
@@ -115,6 +119,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     topGraph->keyAxis()->setRange( timeData.first(), timeData.last() );
     // Setting the same ticker value as used for bottom axis
     topGraph->keyAxis()->setTicker( dateTimeTicker );
+    // Labelling axis
+    topGraph->keyAxis()->setLabel( "Time Axis");
+    topGraph->valueAxis()->setLabel( "ADC Counts" );
   }
 }
 
