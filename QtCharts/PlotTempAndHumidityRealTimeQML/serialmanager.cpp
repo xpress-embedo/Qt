@@ -18,6 +18,15 @@ SerialManager::SerialManager(QObject *parent) : QObject{parent}
   }
 }
 
+SerialManager::~SerialManager()
+{
+  // If serial port is open close it
+  if( m_serial.isOpen() )
+  {
+    m_serial.close();
+  }
+}
+
 bool SerialManager::connectStatus()
 {
   return m_connectStatus;
@@ -46,7 +55,7 @@ void SerialManager::setConnectStatus( bool value )
         // TODO: updae the button name from "Connect" to "Disconnect"
         // TODO: disable the combo box
         // Connect Signal and Slots
-        // connect(&m_serial, SIGNAL( readyRead() ), this, SLOT(readyRead() ) );
+        connect(&m_serial, SIGNAL( readyRead() ), this, SLOT(readyRead() ) );
       }
       else
       {
@@ -67,3 +76,50 @@ void SerialManager::setConnectStatus( bool value )
   }
 }
 
+void  SerialManager::readyRead( void )
+{
+  QByteArray serialData;
+  QByteArray temperature;
+  QByteArray humidity;
+
+  if( m_serial.canReadLine() )
+  {
+    serialData = m_serial.readLine();
+    // to checking here, make sure the data received is in correct format
+    temperature.append(serialData[0]);
+    temperature.append(serialData[1]);
+    humidity.append(serialData[3]);
+    humidity.append(serialData[4]);
+    // qDebug() << temperature.toUInt() << humidity.toUInt();
+    // The function calls will automatically emit the value changed signals
+    setTemperature( temperature.toUShort() );
+    setHumidity( humidity.toUShort() );
+  }
+}
+
+
+uint8_t SerialManager::temperature() const
+{
+  return m_temperature;
+}
+
+void SerialManager::setTemperature(uint8_t newTemperature)
+{
+  if (m_temperature == newTemperature)
+    return;
+  m_temperature = newTemperature;
+  emit temperatureChanged();
+}
+
+uint8_t SerialManager::humidity() const
+{
+  return m_humidity;
+}
+
+void SerialManager::setHumidity(uint8_t newHumidity)
+{
+  if (m_humidity == newHumidity)
+    return;
+  m_humidity = newHumidity;
+  emit humidityChanged();
+}

@@ -33,6 +33,14 @@ Window {
         cb_com_port.enabled = false;
       }
     }
+
+    onTemperatureChanged: {
+      lbl_temperature.text = serialManager.temperature + " C"
+    }
+
+    onHumidityChanged: {
+      lbl_humidity.text = serialManager.humidity + " %";
+    }
   }
 
   Button {
@@ -93,7 +101,7 @@ Window {
   }
 
   Label {
-    id: lbl_temperature1
+    id: lbl_humidity
     x: 400
     y: 20
     width: 50
