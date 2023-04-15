@@ -72,14 +72,39 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     */
 
     // Creating subplots
-    // let's start from scratch and remove the default axis rect
+    // let's start from scratch and remove the default axis rectanlges
     ui->customPlot->plotLayout()->clear();
-    // add the axis rect in second row (row index 1):
+
+    // Adding Title to graphs
+    // first we create and prepare a text layout element:
+    QCPTextElement *titleTop = new QCPTextElement(ui->customPlot);
+    titleTop->setText("ADC Counts Plot Using Offline Data");
+    titleTop->setFont(QFont("sans", 10, QFont::Bold));
+
+    QCPTextElement *titleBottom = new QCPTextElement(ui->customPlot);
+    titleBottom->setText("Temperature Value Plot Using Offline Data");
+    titleBottom->setFont(QFont("sans", 10, QFont::Bold));
+
+    // then we add it to the main plot layout:
+    // insert an empty row, this is 1st row (we are starting from 0th row)
+    ui->customPlot->plotLayout()->insertRow(0);
+    // place the title in the empty cell we've just created
+    ui->customPlot->plotLayout()->addElement(0, 0, titleTop);
+
+    // add the axis rect this is basically 2nd row (index=1)
     QCPAxisRect *topAxisRect = new QCPAxisRect(ui->customPlot);
-    ui->customPlot->plotLayout()->addElement(0, 0, topAxisRect);
-    // add the axis rect in second row (row index 1):
+    ui->customPlot->plotLayout()->addElement(1, 0, topAxisRect);
+
+    // insert an empty row this is basically 3rd row (index=2)
+    ui->customPlot->plotLayout()->insertRow(2);
+    // place the title in the empty cell we've just created
+    ui->customPlot->plotLayout()->addElement(2, 0, titleBottom);
+
+    // insert and empty row this is basically 4th row (index=4)
+    ui->customPlot->plotLayout()->insertRow(3);
+    // add the axis rect in third row (row index 3):
     QCPAxisRect *bottomAxisRect = new QCPAxisRect(ui->customPlot);
-    ui->customPlot->plotLayout()->addElement(1, 0, bottomAxisRect);
+    ui->customPlot->plotLayout()->addElement(3, 0, bottomAxisRect);
 
     QList<QCPAxis*> allAxes;
     allAxes << bottomAxisRect->axes() << topAxisRect->axes();
