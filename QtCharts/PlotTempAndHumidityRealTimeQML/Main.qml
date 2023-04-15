@@ -35,7 +35,7 @@ Window {
     }
 
     onTemperatureChanged: {
-      lbl_temperature.text = serialManager.temperature + " C"
+      lbl_temperature.text = serialManager.temperature + qsTr("\xB0 C")
     }
 
     onHumidityChanged: {
@@ -73,7 +73,7 @@ Window {
     id: cb_com_port
     x: 160
     y: 20
-    width: 100
+    width: 80
     height: 30
     displayText: qsTr("COM1")
     model: ListModel {
@@ -89,12 +89,43 @@ Window {
   }
 
   Label {
-    id: lbl_temperature
-    x: 300
+    id: lbl_temp
+    x: 260
     y: 20
-    width: 50
+    width: 110
     height: 30
-    text: qsTr("0.0 C")
+    color: "indianred"
+    text: qsTr("Temperature:")
+    horizontalAlignment: Text.AlignHCenter
+    verticalAlignment: Text.AlignVCenter
+    font.pointSize: 14
+  }
+
+
+  Label {
+    id: lbl_temperature
+    x: 380
+    y: 20
+    width: 60
+    height: 30
+    color: "indianred"
+    // Both are ways to print degree symbol
+    // text: qsTr("0.0") + qsTr("\u2103")
+    text: qsTr("0.0") + qsTr("\xB0 C")
+    horizontalAlignment: Text.AlignHCenter
+    verticalAlignment: Text.AlignVCenter
+    font.pointSize: 14
+  }
+
+
+  Label {
+    id: lbl_humid
+    x: 450
+    y: 20
+    width: 80
+    height: 30
+    color: "indianred"
+    text: qsTr("Humidity:")
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
     font.pointSize: 14
@@ -102,10 +133,11 @@ Window {
 
   Label {
     id: lbl_humidity
-    x: 400
+    x: 530
     y: 20
-    width: 50
+    width: 60
     height: 30
+    color: "indianred"
     text: qsTr("0 %")
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
