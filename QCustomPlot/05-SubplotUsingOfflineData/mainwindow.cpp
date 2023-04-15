@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     // and it's time to add graph and plot the data
     QColor color(255, 0, 0, 100);
     // QColor color("red");   // I think with this lighter doesn't work as no alpha
-
+    /*
     ui->customPlot->addGraph( );
     ui->customPlot->graph(0)->setLineStyle(QCPGraph::lsLine);
     ui->customPlot->graph(0)->setPen(QPen(color.lighter(20)));
@@ -69,10 +69,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     ui->customPlot->xAxis->setRange( timeData.first(), timeData.last() );
     // Next Step is to update the example
     // https://www.qcustomplot.com/index.php/demos/advancedaxesdemo
+    */
 
     // Creating subplots
     // let's start from scratch and remove the default axis rect
-    /*
     ui->customPlot->plotLayout()->clear();
     // add the axis rect in second row (row index 1):
     QCPAxisRect *topAxisRect = new QCPAxisRect(ui->customPlot);
@@ -110,11 +110,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     // The following methods are for auto rescaling
     // topGraph->rescaleValueAxis();
     // topGraph->rescaleKeyAxis();
+    // If want to set ranges manually use the following methods
     topGraph->valueAxis()->setRange(0, 255);
     topGraph->keyAxis()->setRange( timeData.first(), timeData.last() );
-
+    // Setting the same ticker value as used for bottom axis
     topGraph->keyAxis()->setTicker( dateTimeTicker );
-    */
   }
 }
 
