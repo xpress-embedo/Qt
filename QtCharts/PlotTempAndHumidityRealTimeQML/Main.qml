@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Window
 import QtQuick.Controls 6.2
 
-import SerialManager 1.0
+import com.company.serialmanager 1.0
 
 Window {
   id: root
@@ -20,6 +20,18 @@ Window {
       // method connectStatus, and hence to differentiate between the two
       root.connectStatus = status;
       console.log("QML Message Status Changed", root.connectStatus);
+      if( root.connectStatus == false )
+      {
+        // Set the text of button as "Connect" and enable ComboBox
+        btn_connect_disconnect.text = "Connect";
+        cb_com_port.enabled = true;
+      }
+      else
+      {
+        // Set the text of button as "Connect" and enable ComboBox
+        btn_connect_disconnect.text = "Disconnect";
+        cb_com_port.enabled = false;
+      }
     }
   }
 
@@ -46,7 +58,6 @@ Window {
         // didn't opened, so it will be updated in the emitted signal
         serialManager.setConnectStatus(false);
       }
-
     }
   }
 
@@ -56,6 +67,17 @@ Window {
     y: 20
     width: 100
     height: 30
+    displayText: qsTr("COM1")
+    model: ListModel {
+      ListElement { text: "COM1" }
+      ListElement { text: "COM2" }
+      ListElement { text: "COM3" }
+      ListElement { text: "COM4" }
+      ListElement { text: "COM5" }
+      ListElement { text: "COM6" }
+      ListElement { text: "COM7" }
+      ListElement { text: "COM8" }
+    }
   }
 
   Label {

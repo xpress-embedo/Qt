@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
 
   // Register a type in QML (URI (Package Name), Major Ver., Minor Ver., QML name)
-  qmlRegisterType<SerialManager>("SerialManager", 1, 0, "SerialManager" );
+  qmlRegisterType<SerialManager>("com.company.serialmanager", 1, 0, "SerialManager" );
 
   QQmlApplicationEngine engine;
   const QUrl url(u"qrc:/PlotTempAndHumidityRealTimeQML/Main.qml"_qs);

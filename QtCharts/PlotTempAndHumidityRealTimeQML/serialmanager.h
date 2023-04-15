@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QDebug>
 #include <QVariant>
+#include <QSerialPort>
+#include <QSerialPortInfo>
 
 class SerialManager : public QObject
 {
@@ -21,6 +23,7 @@ public slots:
   void setConnectStatus( bool value );
 
 private:
+  QSerialPort m_serial;
   bool m_connectStatus;
 };
 
