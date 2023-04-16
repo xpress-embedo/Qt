@@ -1,5 +1,6 @@
-
+#include <QDateTime>
 #include "serialmanager.h"
+
 // https://doc.qt.io/qt-5/qtquick-modelviewsdata-cppmodels.html
 SerialManager::SerialManager(QObject *parent) : QObject{parent}
 {
@@ -81,6 +82,7 @@ void  SerialManager::readyRead( void )
   QByteArray serialData;
   QByteArray temperature;
   QByteArray humidity;
+  QPointF temperatureValue;
 
   if( m_serial.canReadLine() )
   {
@@ -94,6 +96,9 @@ void  SerialManager::readyRead( void )
     // The function calls will automatically emit the value changed signals
     setTemperature( temperature.toUShort() );
     setHumidity( humidity.toUShort() );
+    temperatureValue.setX( QDateTime::currentSecsSinceEpoch() );
+    temperatureValue.setY( temperature.toUShort() );
+    setTempValue( temperatureValue );
   }
 }
 
@@ -122,4 +127,17 @@ void SerialManager::setHumidity(uint8_t newHumidity)
     return;
   m_humidity = newHumidity;
   emit humidityChanged();
+}
+
+QPointF SerialManager::tempValue() const
+{
+  return m_tempValue;
+}
+
+void SerialManager::setTempValue(QPointF newTempValue)
+{
+  if (m_tempValue == newTempValue)
+    return;
+  m_tempValue = newTempValue;
+  emit tempValueChanged();
 }

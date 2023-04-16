@@ -42,6 +42,16 @@ ApplicationWindow {
     onHumidityChanged: {
       lbl_humidity.text = serialManager.humidity + " %";
     }
+
+    onTempValueChanged: {
+      if( lineSeriesTemperature.count > 30 )
+      {
+        lineSeriesTemperature.remove(0);
+      }
+      lineSeriesTemperature.append( serialManager.tempValue.x, serialManager.tempValue.y );
+      axisxTemp.min = lineSeriesTemperature.at(0).x
+      axisxTemp.max = lineSeriesTemperature.at( lineSeriesTemperature.count-1).x
+    }
   }
 
   Button {
@@ -146,21 +156,35 @@ ApplicationWindow {
   }
 
   ChartView {
+    id: chartView
     width: 600
     height: 380
     x: 20
     y: 80
     antialiasing: true
 
+    ValueAxis {
+      id: axisyTemp
+      min: 0
+      max: 100
+      gridVisible: false
+      color: "#ffffff"
+      labelsColor: "#ffffff"
+      labelFormat: "%.0f"
+    }
+
+    ValuesAxis {
+      id: axisxTemp
+      gridVisible: false
+      labelFormat: "%.0f"
+      tickCount: 30
+    }
+
     LineSeries {
-      id: lineSeries
-      XYPoint { x: 0; y: 0 }
-      XYPoint { x: 1.1; y: 2.1 }
-      XYPoint { x: 1.9; y: 3.3 }
-      XYPoint { x: 2.1; y: 2.1 }
-      XYPoint { x: 2.9; y: 4.9 }
-      XYPoint { x: 3.4; y: 3.0 }
-      XYPoint { x: 4.1; y: 3.3 }
+      id: lineSeriesTemperature
+      name: "Temperature Values"
+      axisX: axisxTemp
+      axisY: axisyTemp
     }
   }
 }
