@@ -106,16 +106,20 @@ ApplicationWindow {
     y: 20
     width: 80
     height: 30
-    displayText: qsTr("COM1")
+    textRole: "portName"
     model: ListModel {
-      ListElement { text: "COM1" }
-      ListElement { text: "COM2" }
-      ListElement { text: "COM3" }
-      ListElement { text: "COM4" }
-      ListElement { text: "COM5" }
-      ListElement { text: "COM6" }
-      ListElement { text: "COM7" }
-      ListElement { text: "COM8" }
+      ListElement { portName: "COM1" }
+      ListElement { portName: "COM2" }
+      ListElement { portName: "COM3" }
+      ListElement { portName: "COM4" }
+      ListElement { portName: "COM5" }
+      ListElement { portName: "COM6" }
+      ListElement { portName: "COM7" }
+      ListElement { portName: "COM8" }
+    }
+    onCurrentTextChanged: {
+      console.log( cb_com_port.currentText );
+      serialManager.setComName( cb_com_port.currentText );
     }
   }
 

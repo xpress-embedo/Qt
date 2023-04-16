@@ -19,6 +19,7 @@ class SerialManager : public QObject
   Q_PROPERTY(QPointF temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged);
   Q_PROPERTY(QDateTime minRange READ minRange WRITE setMinRange NOTIFY minRangeChanged);
   Q_PROPERTY(QDateTime maxRange READ maxRange WRITE setMaxRange NOTIFY maxRangeChanged);
+  Q_PROPERTY(QString comName READ comName WRITE setComName NOTIFY comNameChanged);
 
 public:
   explicit SerialManager(QObject *parent = nullptr);
@@ -38,6 +39,8 @@ public:
   QDateTime maxRange() const;
   void setMaxRange(const QDateTime &newMaxRange);
 
+  QString comName() const;
+
 signals:
   void connectStatusChanged( bool currentStatus );
 
@@ -49,9 +52,12 @@ signals:
 
   void maxRangeChanged();
 
+  void comNameChanged();
+
 public slots:
   void readyRead( void );
   void setConnectStatus( bool value );
+  void setComName(const QString &newComName);
 
 private:
   QSerialPort m_serial;
@@ -60,6 +66,7 @@ private:
   QPointF m_humidity;
   QDateTime m_minRange;
   QDateTime m_maxRange;
+  QString m_comName;
 };
 
 #endif // SERIALMANAGER_H

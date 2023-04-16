@@ -48,8 +48,7 @@ void SerialManager::setConnectStatus( bool value )
       m_serial.setParity( QSerialPort::NoParity );
       m_serial.setStopBits( QSerialPort::OneStop );
       m_serial.setFlowControl( QSerialPort::NoFlowControl );
-      // m_serial.setPortName( comPortName );
-      m_serial.setPortName( "COM1" );
+      m_serial.setPortName( comName() );
       if( m_serial.open( QIODevice::ReadWrite ) )
       {
         qDebug() << "Serial Port Opened Successfully";
@@ -181,4 +180,17 @@ void SerialManager::setMaxRange(const QDateTime &newMaxRange)
     return;
   m_maxRange = newMaxRange;
   emit maxRangeChanged();
+}
+
+QString SerialManager::comName() const
+{
+  return m_comName;
+}
+
+void SerialManager::setComName(const QString &newComName)
+{
+  if (m_comName == newComName)
+    return;
+  m_comName = newComName;
+  emit comNameChanged();
 }
