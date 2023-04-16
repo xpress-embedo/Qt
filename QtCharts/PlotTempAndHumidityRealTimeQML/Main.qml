@@ -37,17 +37,37 @@ ApplicationWindow {
 
     onTemperatureChanged: {
       lbl_temperature.text = serialManager.temperature.y + qsTr("\xB0 C")
-      if( lineSeriesTemperature.count > 30 )
+      /* This this is a real-time plot and for each session we display around
+      SECONDS_SHOW_ON_GRAPH seconds on graph, => serialmanager.cpp file
+      so it is difficult to predict how many counts we have received and
+      how to reset them.
+      TODO: this I will try to handle in future, although it's not a problem
+      but as we keep of appending this list keeps on growing, which is a kind
+      of not a good thing
+      if( lineSeriesTemperature.count > 10 )
       {
         lineSeriesTemperature.remove(0);
-      }
+      }*/
+
       lineSeriesTemperature.append( serialManager.temperature.x, serialManager.temperature.y );
-      axisxTemp.min = lineSeriesTemperature.at(0).x
-      axisxTemp.max = lineSeriesTemperature.at( lineSeriesTemperature.count-1).x
+
+      /* I am not setting the minimum and maximum range here, because the value
+      of time received is in milliseconds, and I don't know hown to convert it
+      to datetime, so I used another approach, of adjusting the ranges from
+      C++ code, using onMinRangeChanged and onMaxRangeChanged */
+      // axisxTemp.min = lineSeriesTemperature.at(0).x
+      // axisxTemp.max = lineSeriesTemperature.at( lineSeriesTemperature.count-1).x
     }
 
     onHumidityChanged: {
       lbl_humidity.text = serialManager.humidity.y + " %";
+    }
+
+    onMinRangeChanged: {
+      axisxTemp.min = serialManager.minRange;
+    }
+    onMaxRangeChanged: {
+      axisxTemp.max = serialManager.maxRange;
     }
   }
 
@@ -155,26 +175,29 @@ ApplicationWindow {
   ChartView {
     id: chartViewTemperature
     width: 600
-    height: 380
+    height: 400
     x: 20
-    y: 80
+    y: 60
+    title: "Temperature Values"
     antialiasing: true
+    legend.enabled: false
 
     ValueAxis {
       id: axisyTemp
       min: 0
       max: 100
-      gridVisible: false
+      gridVisible: true
       color: "#ffffff"
       labelsColor: "#ffffff"
       labelFormat: "%.0f"
     }
 
-    ValuesAxis {
+    DateTimeAxis {
       id: axisxTemp
-      gridVisible: false
-      labelFormat: "%.0f"
-      tickCount: 30
+      gridVisible: true
+      format: "hh:mm:ss"
+      tickCount: 10
+      titleText: "Time"
     }
 
     LineSeries {
@@ -184,4 +207,14 @@ ApplicationWindow {
       axisY: axisyTemp
     }
   }
+
+//  ChartView {
+//    id: chartViewHumidity
+//    width: chartViewTemperature.width
+//    height: chartViewTemperature.height
+//    x: chartViewTemperature.x
+//    y: chartViewTemperature.y + chartViewTemperature.height
+//    title: "Humidity Values"
+//    antialiasing: true
+//  }
 }

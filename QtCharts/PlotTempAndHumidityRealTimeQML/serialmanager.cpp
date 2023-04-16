@@ -1,5 +1,7 @@
-#include <QDateTime>
 #include "serialmanager.h"
+
+const uint8_t SECONDS_SHOW_ON_GRAPH = 20;   // Display "x" seconds on the graph
+static qint64 startTime;
 
 // https://doc.qt.io/qt-5/qtquick-modelviewsdata-cppmodels.html
 SerialManager::SerialManager(QObject *parent) : QObject{parent}
@@ -57,6 +59,16 @@ void SerialManager::setConnectStatus( bool value )
         // TODO: disable the combo box
         // Connect Signal and Slots
         connect(&m_serial, SIGNAL( readyRead() ), this, SLOT(readyRead() ) );
+
+        // Setting range of SECONDS_SHOW_ON_GRAPH
+        // get the current time
+        QDateTime now = QDateTime::currentDateTime();
+        // convert this time in seconds, to compare it with time and readjust the
+        // the graph range
+        startTime = now.toSecsSinceEpoch();
+        // emit signal to adjust the ranges
+        setMinRange( now );
+        setMaxRange( now.addSecs(SECONDS_SHOW_ON_GRAPH) );
       }
       else
       {
@@ -84,7 +96,7 @@ void  SerialManager::readyRead( void )
   QByteArray humidity;
   QPointF temperatureValue;
   QPointF humidityValue;
-  double now;
+  QDateTime now;
 
   if( m_serial.canReadLine() )
   {
@@ -96,13 +108,26 @@ void  SerialManager::readyRead( void )
     humidity.append(serialData[4]);
     // qDebug() << temperature.toUInt() << humidity.toUInt();
     // The function calls will automatically emit the value changed signals
-    now = QDateTime::currentSecsSinceEpoch();
-    temperatureValue.setX( now );
+    now = QDateTime::currentDateTime();
+    temperatureValue.setX( now.toMSecsSinceEpoch() );
     temperatureValue.setY( temperature.toUShort() );
+    // set the temperature value, this will emit the signal to update the label
+    // and line series which in turn update the chart
     setTemperature( temperatureValue );
-    humidityValue.setX( now );
+    humidityValue.setX( now.toMSecsSinceEpoch() );
     humidityValue.setY( humidity.toUShort() );
+    // set the humidity value, this will emit the signal to update the label
+    // and line series which in turn update the chart
     setHumidity( humidityValue );
+
+    // Check if we need to readjust the range of x-axis i.e. time axis
+    if( (now.toSecsSinceEpoch()-startTime) > SECONDS_SHOW_ON_GRAPH )
+    {
+      // Already SECONDS_SHOW_ON_GRAPH time has expired, means we need to update
+      // the minimum and maximum time axis ranges
+      setMaxRange( now );
+      setMinRange( now.addSecs((-1)*SECONDS_SHOW_ON_GRAPH) );
+    }
   }
 }
 
@@ -130,4 +155,30 @@ void SerialManager::setHumidity(QPointF newHumidity)
     return;
   m_humidity = newHumidity;
   emit humidityChanged();
+}
+
+QDateTime SerialManager::minRange() const
+{
+  return m_minRange;
+}
+
+void SerialManager::setMinRange(const QDateTime &newMinRange)
+{
+  if (m_minRange == newMinRange)
+    return;
+  m_minRange = newMinRange;
+  emit minRangeChanged();
+}
+
+QDateTime SerialManager::maxRange() const
+{
+  return m_maxRange;
+}
+
+void SerialManager::setMaxRange(const QDateTime &newMaxRange)
+{
+  if (m_maxRange == newMaxRange)
+    return;
+  m_maxRange = newMaxRange;
+  emit maxRangeChanged();
 }
