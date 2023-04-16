@@ -83,6 +83,8 @@ void  SerialManager::readyRead( void )
   QByteArray temperature;
   QByteArray humidity;
   QPointF temperatureValue;
+  QPointF humidityValue;
+  double now;
 
   if( m_serial.canReadLine() )
   {
@@ -94,21 +96,22 @@ void  SerialManager::readyRead( void )
     humidity.append(serialData[4]);
     // qDebug() << temperature.toUInt() << humidity.toUInt();
     // The function calls will automatically emit the value changed signals
-    setTemperature( temperature.toUShort() );
-    setHumidity( humidity.toUShort() );
-    temperatureValue.setX( QDateTime::currentSecsSinceEpoch() );
+    now = QDateTime::currentSecsSinceEpoch();
+    temperatureValue.setX( now );
     temperatureValue.setY( temperature.toUShort() );
-    setTempValue( temperatureValue );
+    setTemperature( temperatureValue );
+    humidityValue.setX( now );
+    humidityValue.setY( humidity.toUShort() );
+    setHumidity( humidityValue );
   }
 }
 
-
-uint8_t SerialManager::temperature() const
+QPointF SerialManager::temperature() const
 {
   return m_temperature;
 }
 
-void SerialManager::setTemperature(uint8_t newTemperature)
+void SerialManager::setTemperature(QPointF newTemperature)
 {
   if (m_temperature == newTemperature)
     return;
@@ -116,28 +119,15 @@ void SerialManager::setTemperature(uint8_t newTemperature)
   emit temperatureChanged();
 }
 
-uint8_t SerialManager::humidity() const
+QPointF SerialManager::humidity() const
 {
   return m_humidity;
 }
 
-void SerialManager::setHumidity(uint8_t newHumidity)
+void SerialManager::setHumidity(QPointF newHumidity)
 {
   if (m_humidity == newHumidity)
     return;
   m_humidity = newHumidity;
   emit humidityChanged();
-}
-
-QPointF SerialManager::tempValue() const
-{
-  return m_tempValue;
-}
-
-void SerialManager::setTempValue(QPointF newTempValue)
-{
-  if (m_tempValue == newTempValue)
-    return;
-  m_tempValue = newTempValue;
-  emit tempValueChanged();
 }

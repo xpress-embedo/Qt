@@ -36,21 +36,18 @@ ApplicationWindow {
     }
 
     onTemperatureChanged: {
-      lbl_temperature.text = serialManager.temperature + qsTr("\xB0 C")
-    }
-
-    onHumidityChanged: {
-      lbl_humidity.text = serialManager.humidity + " %";
-    }
-
-    onTempValueChanged: {
+      lbl_temperature.text = serialManager.temperature.y + qsTr("\xB0 C")
       if( lineSeriesTemperature.count > 30 )
       {
         lineSeriesTemperature.remove(0);
       }
-      lineSeriesTemperature.append( serialManager.tempValue.x, serialManager.tempValue.y );
+      lineSeriesTemperature.append( serialManager.temperature.x, serialManager.temperature.y );
       axisxTemp.min = lineSeriesTemperature.at(0).x
       axisxTemp.max = lineSeriesTemperature.at( lineSeriesTemperature.count-1).x
+    }
+
+    onHumidityChanged: {
+      lbl_humidity.text = serialManager.humidity.y + " %";
     }
   }
 
@@ -156,7 +153,7 @@ ApplicationWindow {
   }
 
   ChartView {
-    id: chartView
+    id: chartViewTemperature
     width: 600
     height: 380
     x: 20
