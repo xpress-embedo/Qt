@@ -179,6 +179,8 @@ ApplicationWindow {
     x: 20
     y: 60
     title: "Temperature Values"
+    titleFont.bold: true
+    titleFont.pointSize: 12
     antialiasing: true
     legend.visible: false
 
@@ -189,6 +191,9 @@ ApplicationWindow {
       gridVisible: true
       tickCount: 7
       titleText: "Temperature Value"
+      titleFont.bold: true
+      titleFont.italic: true
+      titleFont.pointSize: 10
     }
 
     DateTimeAxis {
@@ -197,6 +202,9 @@ ApplicationWindow {
       format: "hh:mm:ss"
       tickCount: 10
       titleText: "Time"
+      titleFont.bold: true
+      titleFont.italic: true
+      titleFont.pointSize: 10
     }
 
     LineSeries {
