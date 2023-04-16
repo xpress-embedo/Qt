@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
 find_package(Qt6 REQUIRED COMPONENTS SerialPort)
+find_package(Qt6 REQUIRED COMPONENTS Charts)
 
 
 qt_add_executable(appPlotTempAndHumidityRealTimeQML
@@ -31,6 +32,7 @@ set_target_properties(appPlotTempAndHumidityRealTimeQML PROPERTIES
 target_link_libraries(appPlotTempAndHumidityRealTimeQML
     PRIVATE Qt6::Quick
     Qt6::SerialPort
+    Qt6::Charts
 )
 
 install(TARGETS appPlotTempAndHumidityRealTimeQML
