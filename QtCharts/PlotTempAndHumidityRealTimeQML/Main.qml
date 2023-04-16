@@ -180,16 +180,15 @@ ApplicationWindow {
     y: 60
     title: "Temperature Values"
     antialiasing: true
-    legend.enabled: false
+    legend.visible: false
 
     ValueAxis {
       id: axisyTemp
       min: 0
-      max: 100
+      max: 60
       gridVisible: true
-      color: "#ffffff"
-      labelsColor: "#ffffff"
-      labelFormat: "%.0f"
+      tickCount: 7
+      titleText: "Temperature Value"
     }
 
     DateTimeAxis {
@@ -202,6 +201,7 @@ ApplicationWindow {
 
     LineSeries {
       id: lineSeriesTemperature
+
       name: "Temperature Values"
       axisX: axisxTemp
       axisY: axisyTemp
