@@ -8,7 +8,7 @@ import com.company.serialmanager 1.0
 ApplicationWindow {
   id: root
   width: 640
-  height: 480
+  height: 840
   visible: true
   title: qsTr("Temperature and Humidity Plot")
 
@@ -61,13 +61,16 @@ ApplicationWindow {
 
     onHumidityChanged: {
       lbl_humidity.text = serialManager.humidity.y + " %";
+      lineSeriesHumidity.append( serialManager.humidity.x, serialManager.humidity.y );
     }
 
     onMinRangeChanged: {
       axisxTemp.min = serialManager.minRange;
+      axisxHumid.min = serialManager.minRange;
     }
     onMaxRangeChanged: {
       axisxTemp.max = serialManager.maxRange;
+      axisxHumid.max = serialManager.maxRange;
     }
   }
 
@@ -174,9 +177,9 @@ ApplicationWindow {
 
   ChartView {
     id: chartViewTemperature
-    width: 600
-    height: 400
-    x: 20
+    width: 620
+    height: 380
+    x: 10
     y: 60
     title: "Temperature Values"
     titleFont.bold: true
@@ -190,7 +193,7 @@ ApplicationWindow {
       max: 60
       gridVisible: true
       tickCount: 7
-      titleText: "Temperature Value"
+      titleText: "Temperature Value" + qsTr("\xB0 C")
       titleFont.bold: true
       titleFont.italic: true
       titleFont.pointSize: 10
@@ -216,13 +219,46 @@ ApplicationWindow {
     }
   }
 
-//  ChartView {
-//    id: chartViewHumidity
-//    width: chartViewTemperature.width
-//    height: chartViewTemperature.height
-//    x: chartViewTemperature.x
-//    y: chartViewTemperature.y + chartViewTemperature.height
-//    title: "Humidity Values"
-//    antialiasing: true
-//  }
+  ChartView {
+    id: chartViewHumidity
+    width: chartViewTemperature.width
+    height: chartViewTemperature.height
+    x: chartViewTemperature.x
+    y: chartViewTemperature.y + chartViewTemperature.height
+    title: "Humidity Values"
+    titleFont.bold: true
+    titleFont.pointSize: 12
+    antialiasing: true
+    legend.visible: false
+
+    ValueAxis {
+      id: axisyHumid
+      min: 0
+      max: 100
+      gridVisible: true
+      tickCount: 11
+      titleText: "Humidity Value (%)"
+      titleFont.bold: true
+      titleFont.italic: true
+      titleFont.pointSize: 10
+    }
+
+    DateTimeAxis {
+      id: axisxHumid
+      gridVisible: true
+      format: "hh:mm:ss"
+      tickCount: 10
+      titleText: "Time"
+      titleFont.bold: true
+      titleFont.italic: true
+      titleFont.pointSize: 10
+    }
+
+    LineSeries {
+      id: lineSeriesHumidity
+      name: "Humidity Values"
+      axisX: axisxHumid
+      axisY: axisyHumid
+    }
+  }
 }
