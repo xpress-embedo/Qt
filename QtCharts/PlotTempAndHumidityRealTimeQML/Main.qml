@@ -106,6 +106,9 @@ ApplicationWindow {
     y: 20
     width: 80
     height: 30
+    model: serialManager.detectedComNames;
+    /* // This is the hard-coded way, better approach is to fill the information
+       // of com port from the C++ code, which is implemented above
     textRole: "portName"
     model: ListModel {
       ListElement { portName: "COM1" }
@@ -117,6 +120,7 @@ ApplicationWindow {
       ListElement { portName: "COM7" }
       ListElement { portName: "COM8" }
     }
+    */
     onCurrentTextChanged: {
       console.log( cb_com_port.currentText );
       serialManager.setComName( cb_com_port.currentText );
@@ -263,6 +267,8 @@ ApplicationWindow {
       name: "Humidity Values"
       axisX: axisxHumid
       axisY: axisyHumid
+      color: "indianred"
+      width: 3
     }
   }
 }

@@ -20,6 +20,7 @@ class SerialManager : public QObject
   Q_PROPERTY(QDateTime minRange READ minRange WRITE setMinRange NOTIFY minRangeChanged);
   Q_PROPERTY(QDateTime maxRange READ maxRange WRITE setMaxRange NOTIFY maxRangeChanged);
   Q_PROPERTY(QString comName READ comName WRITE setComName NOTIFY comNameChanged);
+  Q_PROPERTY(QStringList detectedComNames READ detectedComNames WRITE setDetectedComNames NOTIFY detectedComNamesChanged);
 
 public:
   explicit SerialManager(QObject *parent = nullptr);
@@ -41,6 +42,9 @@ public:
 
   QString comName() const;
 
+  QStringList detectedComNames() const;
+  void setDetectedComNames(const QStringList &newDetectedComNames);
+
 signals:
   void connectStatusChanged( bool currentStatus );
 
@@ -53,6 +57,8 @@ signals:
   void maxRangeChanged();
 
   void comNameChanged();
+
+  void detectedComNamesChanged();
 
 public slots:
   void readyRead( void );
@@ -67,6 +73,7 @@ private:
   QDateTime m_minRange;
   QDateTime m_maxRange;
   QString m_comName;
+  QStringList m_detectedComNames;
 };
 
 #endif // SERIALMANAGER_H

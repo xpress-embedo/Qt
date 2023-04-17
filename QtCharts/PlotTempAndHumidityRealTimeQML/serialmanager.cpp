@@ -16,6 +16,7 @@ SerialManager::SerialManager(QObject *parent) : QObject{parent}
   for( const QSerialPortInfo &port_info : serial_port_infos )
   {
     qDebug() << "Port: " << port_info.portName();
+    m_detectedComNames.append( port_info.portName() );
     // we have to add this port name in the combo box "port_info.portName()"
     // on QML which I don't know as of now
   }
@@ -193,4 +194,17 @@ void SerialManager::setComName(const QString &newComName)
     return;
   m_comName = newComName;
   emit comNameChanged();
+}
+
+QStringList SerialManager::detectedComNames() const
+{
+  return m_detectedComNames;
+}
+
+void SerialManager::setDetectedComNames(const QStringList &newDetectedComNames)
+{
+  if (m_detectedComNames == newDetectedComNames)
+    return;
+  m_detectedComNames = newDetectedComNames;
+  emit detectedComNamesChanged();
 }
