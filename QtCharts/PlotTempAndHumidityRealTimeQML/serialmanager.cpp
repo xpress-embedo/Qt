@@ -43,7 +43,7 @@ void SerialManager::setConnectStatus( bool value )
     // if false, we have to connect, else disconnect
     if( m_connectStatus == false )
     {
-      //  TODO: qDebug() << "Connecting: " << comPortName;
+      qDebug() << "Connecting: " << comName();
       m_serial.setBaudRate( QSerialPort::Baud9600 );
       m_serial.setDataBits( QSerialPort::Data8 );
       m_serial.setParity( QSerialPort::NoParity );
@@ -55,8 +55,8 @@ void SerialManager::setConnectStatus( bool value )
         qDebug() << "Serial Port Opened Successfully";
         m_serial.write("Hello World from Qt\r\n");
         m_connectStatus = true;
-        // TODO: updae the button name from "Connect" to "Disconnect"
-        // TODO: disable the combo box
+        // updae the button name from "Connect" to "Disconnect" is done in QML
+        // disable the combo box is also done is the QML code
         // Connect Signal and Slots
         connect(&m_serial, SIGNAL( readyRead() ), this, SLOT(readyRead() ) );
 
@@ -82,8 +82,8 @@ void SerialManager::setConnectStatus( bool value )
       qDebug() << "Disconnecting...";
       // close the serial port
       m_serial.close();
-      // TODO: Revert the status of "Disconnect" button to "Connect"
-      // TODO: Enable the combo box
+      // Reverting the status of "Disconnect" button to "Connect" is done in QML
+      // Enable the combo box is also done in QML
     }
     emit connectStatusChanged( m_connectStatus );
   }
@@ -196,15 +196,8 @@ void SerialManager::setComName(const QString &newComName)
   emit comNameChanged();
 }
 
+
 QStringList SerialManager::detectedComNames() const
 {
   return m_detectedComNames;
-}
-
-void SerialManager::setDetectedComNames(const QStringList &newDetectedComNames)
-{
-  if (m_detectedComNames == newDetectedComNames)
-    return;
-  m_detectedComNames = newDetectedComNames;
-  emit detectedComNamesChanged();
 }

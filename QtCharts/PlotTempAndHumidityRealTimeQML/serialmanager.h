@@ -2,7 +2,6 @@
 #ifndef SERIALMANAGER_H
 #define SERIALMANAGER_H
 
-
 #include <QObject>
 #include <QDebug>
 #include <QVariant>
@@ -20,7 +19,16 @@ class SerialManager : public QObject
   Q_PROPERTY(QDateTime minRange READ minRange WRITE setMinRange NOTIFY minRangeChanged);
   Q_PROPERTY(QDateTime maxRange READ maxRange WRITE setMaxRange NOTIFY maxRangeChanged);
   Q_PROPERTY(QString comName READ comName WRITE setComName NOTIFY comNameChanged);
-  Q_PROPERTY(QStringList detectedComNames READ detectedComNames WRITE setDetectedComNames NOTIFY detectedComNamesChanged);
+  /* IMPOTANT NOTE for below mentioned property
+   * I deleted the WRITE and NOTIFY signal, I am not using them, hence removed
+   * Why I added CONSTANT in the below mentioned property, because I was getting
+   * the "Warning about non-NOTIFYable properties in QML"
+   * If the property values can change, then QML needs a NOTIFY signal so it can
+   * know when they have changed and update property bindings. If they can't
+   * change, add CONSTANT to your property declaration
+   * https://stackoverflow.com/questions/6728615/warning-about-non-notifyable-properties-in-qml
+  */
+  Q_PROPERTY(QStringList detectedComNames READ detectedComNames CONSTANT);
 
 public:
   explicit SerialManager(QObject *parent = nullptr);
@@ -43,7 +51,6 @@ public:
   QString comName() const;
 
   QStringList detectedComNames() const;
-  void setDetectedComNames(const QStringList &newDetectedComNames);
 
 signals:
   void connectStatusChanged( bool currentStatus );
@@ -57,8 +64,6 @@ signals:
   void maxRangeChanged();
 
   void comNameChanged();
-
-  void detectedComNamesChanged();
 
 public slots:
   void readyRead( void );
