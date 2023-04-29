@@ -1,6 +1,6 @@
 #include "serialmanager.h"
 
-const uint8_t SECONDS_SHOW_ON_GRAPH = 20;   // Display "x" seconds on the graph
+const uint8_t SECONDS_SHOW_ON_GRAPH = 60;   // Display "x" seconds on the graph
 static qint64 startTime;
 
 // https://doc.qt.io/qt-5/qtquick-modelviewsdata-cppmodels.html
