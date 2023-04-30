@@ -19,6 +19,9 @@ public:
   Widget(QWidget *parent = nullptr);
   ~Widget();
 
+private slots:
+  void on_btnProvideInfo_clicked();
+
 private:
   Ui::Widget *ui;
 };
