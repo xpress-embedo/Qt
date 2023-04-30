@@ -47,3 +47,13 @@ void InfoDialog::on_btnOK_clicked()
   accept();
 }
 
+QString InfoDialog::getFavoriteOS() const
+{
+  return favoriteOS;
+}
+
+QString InfoDialog::getPosition() const
+{
+  return position;
+}
+

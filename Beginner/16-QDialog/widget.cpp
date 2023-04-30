@@ -29,6 +29,8 @@ void Widget::on_btnProvideInfo_clicked()
   if( response == QDialog::Accepted )
   {
     qDebug() << "Dialog Accepted";
+    qDebug() << "Position: " << dialog->getPosition();
+    qDebug() << "Favorite OS: " << dialog->getFavoriteOS();
   }
   else
   {

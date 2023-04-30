@@ -15,6 +15,10 @@ public:
   explicit InfoDialog(QWidget *parent = nullptr);
   ~InfoDialog();
 
+  QString getPosition() const;
+
+  QString getFavoriteOS() const;
+
 private slots:
   void on_btnCancel_clicked();
 
