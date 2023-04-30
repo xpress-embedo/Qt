@@ -24,6 +24,15 @@ void Widget::on_btnProvideInfo_clicked()
   // show this using execute method
   /* NOTE: This exec method shows the dialog as model dialog, blocking it until
   the user closes it. */
-  dialog->exec();
+  int response = dialog->exec();
+  // Response is used to check if the Dialog is Accepted or Rejected
+  if( response == QDialog::Accepted )
+  {
+    qDebug() << "Dialog Accepted";
+  }
+  else
+  {
+    qDebug() << "Dialog Rejected";
+  }
 }
 
