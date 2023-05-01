@@ -26,8 +26,6 @@ Widget::~Widget()
   delete ui;
 }
 
-
-
 void Widget::on_btnActive_clicked()
 {
   QPalette::ColorGroup activeButtonColorGroup = ui->btnActive->palette().currentColorGroup();
