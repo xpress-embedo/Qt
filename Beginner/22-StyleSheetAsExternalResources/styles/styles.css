@@ -1,4 +1,9 @@
-QPushButton {
+QPushButton[text="Submit"] {
   color: white;
   background-color: indianred;
+}
+
+QPushButton {
+  color: white;
+  background-color: darkblue;
 }
