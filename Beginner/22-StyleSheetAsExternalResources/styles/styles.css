@@ -1,3 +1,4 @@
+/*Specify style for Button with text equals to "Submit"*/
 QPushButton[text="Submit"] {
   color: white;
   background-color: indianred;
@@ -6,4 +7,10 @@ QPushButton[text="Submit"] {
 QPushButton {
   color: white;
   background-color: darkblue;
+}
+
+/*Specify Style for button with object names*/
+QPushButton#btnOK {
+  color: white;
+  background-color: darkgreen;
 }

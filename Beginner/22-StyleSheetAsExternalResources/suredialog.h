@@ -15,6 +15,11 @@ public:
   explicit SureDialog(QWidget *parent = nullptr);
   ~SureDialog();
 
+private slots:
+  void on_btnOK_clicked();
+
+  void on_btnCancel_clicked();
+
 private:
   Ui::SureDialog *ui;
 };
