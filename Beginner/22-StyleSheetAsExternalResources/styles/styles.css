@@ -1,16 +1,39 @@
 /*Specify style for Button with text equals to "Submit"*/
+/*This is Property Selector Method*/
 QPushButton[text="Submit"] {
   color: white;
-  background-color: indianred;
+  background-color: gray;
+  height: 30px;
 }
 
 QPushButton {
   color: white;
-  background-color: darkblue;
+  background-color: indianred;
 }
 
 /*Specify Style for button with object names*/
+/*This is ID Selector Method*/
 QPushButton#btnOK {
   color: white;
   background-color: darkgreen;
 }
+
+/*Updating the LineEdit's*/
+QLineEdit {
+  padding: 1px;
+  border: 2px solid gray;
+  border-radius: 8px;
+  background-color: yellow;
+  height: 30px;
+}
+
+/*Updating the styling of Labels corresponding to LineEdit
+But don't want to change the styling of labels on Dialog.
+One way is to use the object id's but there is a much better
+approach rather than mentioning individual id's*/
+/*This can be done using the "Child Selector" Method*/
+QWidget#Widget > QLabel {
+  font-weight: bold;
+  font-size: 12px;
+}
+
