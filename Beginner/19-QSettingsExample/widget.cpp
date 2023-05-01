@@ -11,7 +11,7 @@ Widget::Widget(QWidget *parent)
 {
   ui->setupUi(this);
 
-  for( int idx; idx<9; idx++ )
+  for( int idx=0; idx<9; idx++ )
   {
     colorList.append(Qt::black);
   }
