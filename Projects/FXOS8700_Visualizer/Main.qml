@@ -5,92 +5,59 @@ import QtQuick.Window
 import com.company.serialmanager 1.0
 
 Window {
-  width: 1280
-  height: 720
+  width: 640
+  height: 480
   visible: true
   title: qsTr("FXOS8700 Data Visualizer")
 
   SerialManager {
     id: serialManager
     onRollChanged: {
-      cubeModel.eulerRotation.x = roll
+      cubeModel.eulerRotation.x = roll;
+      textRollValue.text = roll.toFixed(2)
     }
     onPitchChanged: {
-      cubeModel.eulerRotation.z = pitch
+      cubeModel.eulerRotation.z = (-1.0)*pitch;
+      textPitchValue.text = pitch.toFixed(2)
     }
   }
 
   Node {
     id: standAloneScene
-    PerspectiveCamera {
-      position: Qt.vector3d(0, 200, 300)
-      eulerRotation.x: -30
-    }
-
-    DirectionalLight {
-      eulerRotation.x: -30
-      eulerRotation.y: -70
-    }
-
     Model {
       id: cubeModel
       position: Qt.vector3d( 0, 0, 0)
       source: "#Cube"
-      // scale: Qt.vector3d(1, 1, 0.5)
       materials: [
-        DefaultMaterial { diffuseColor: "indianred"}
+        // DefaultMaterial { diffuseColor: "indianred"}
+        DefaultMaterial {
+          diffuseMap: Texture {
+            sourceItem: Item {
+              anchors.fill: parent
+              // layer.enabled: true
+              Rectangle {
+                anchors.fill: parent
+                color: "white"
+              }
+              Image {
+                anchors.fill: parent
+                source: "qrc:/image/chip.png"
+              }
+              Text {
+                width: parent.width
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                color: "black"
+                font.pixelSize: 50
+                font.bold: true
+                text: qsTr("Accelerometer Demo")
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+              }
+            }
+          }
+        }
       ]
-//      rotation: {
-//        var rollRadians = (roll)*Math.PI/180;
-//        var pitchRadians = (pitch)*Math.PI/180;
-//        var yawRadians = 0; // No yaw rotation
-//        Qt.quaternionFromEulerAngles(rollRadians, pitchRadians, yawRadians)
-//      }
-//      SequentialAnimation on y {
-//        loops: Animation.Infinite
-//        NumberAnimation {
-//          duration: 3000
-//          to: -150
-//          from: 150
-//          easing.type: Easing.InQuad
-//        }
-//        NumberAnimation {
-//          duration: 3000
-//          to: 150
-//          from: -150
-//          easing.type: Easing.InQuad
-//        }
-//      }
-//      SequentialAnimation on x {
-//        loops: Animation.Infinite
-//        NumberAnimation {
-//          duration: 3000
-//          to: -150
-//          from: 150
-//          easing.type: Easing.InQuad
-//        }
-//        NumberAnimation {
-//          duration: 3000
-//          to: 150
-//          from: -150
-//          easing.type: Easing.InQuad
-//        }
-//      }
-//      SequentialAnimation on z {
-//        loops: Animation.Infinite
-//        NumberAnimation {
-//          duration: 3000
-//          to: -150
-//          from: 150
-//          easing.type: Easing.InQuad
-//        }
-//        NumberAnimation {
-//          duration: 3000
-//          to: 150
-//          from: -150
-//          easing.type: Easing.InQuad
-//        }
-//      }
     }
   }
 
@@ -103,17 +70,54 @@ Window {
       backgroundMode: SceneEnvironment.Color
     }
     importScene: standAloneScene
-
-    MouseArea {
-      anchors.fill: parent
-      onClicked: {
-        // rotate the cube model by 30 degrees in x-direction
-        cubeModel.eulerRotation.x += 30
-      }
-      onDoubleClicked:
-      {
-        cubeModel.eulerRotation.y += 30
-      }
+    PerspectiveCamera {
+      position: Qt.vector3d(0, 200, 300)
+      eulerRotation.x: -30
     }
+
+    DirectionalLight {
+      eulerRotation.x: -30
+      eulerRotation.y: -70
+    }
+  }
+
+  Text {
+    id: textRoll
+    x: 250
+    y: 20
+    visible: true
+    text: qsTr("Roll:")
+    font.pixelSize: 20
+    horizontalAlignment: Text.AlignLeft
+  }
+
+  Text {
+    id: textRollValue
+    x: textRoll.x + 80
+    y: textRoll.y
+    visible: true
+    text: qsTr("0")
+    font.pixelSize: 20
+    horizontalAlignment: Text.AlignLeft
+  }
+
+  Text {
+    id: textPitch
+    x: 250
+    y: 50
+    visible: true
+    text: qsTr("Pitch:")
+    font.pixelSize: 20
+    horizontalAlignment: Text.AlignLeft
+  }
+
+  Text {
+    id: textPitchValue
+    x: textPitch.x + 80
+    y: textPitch.y
+    visible: true
+    text: qsTr("0")
+    font.pixelSize: 20
+    horizontalAlignment: Text.AlignLeft
   }
 }

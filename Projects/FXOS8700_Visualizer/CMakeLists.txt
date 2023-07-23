@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(FXOS8700_Visualizer VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
@@ -13,12 +14,14 @@ find_package(Qt6 6.2 REQUIRED COMPONENTS SerialPort)
 qt_add_executable(appFXOS8700_Visualizer
     main.cpp
     serialmanager.h serialmanager.cpp
+    resources.qrc
 )
 
 qt_add_qml_module(appFXOS8700_Visualizer
     URI FXOS8700_Visualizer
     VERSION 1.0
     QML_FILES Main.qml
+    RESOURCES resources.qrc
 )
 
 set_target_properties(appFXOS8700_Visualizer PROPERTIES
