@@ -7,10 +7,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
 find_package(Qt6 6.2 REQUIRED COMPONENTS Quick3D)
+find_package(Qt6 6.2 REQUIRED COMPONENTS SerialPort)
 
 
 qt_add_executable(appFXOS8700_Visualizer
     main.cpp
+    serialmanager.h serialmanager.cpp
 )
 
 qt_add_qml_module(appFXOS8700_Visualizer
@@ -30,6 +32,7 @@ set_target_properties(appFXOS8700_Visualizer PROPERTIES
 target_link_libraries(appFXOS8700_Visualizer
     PRIVATE Qt6::Quick
     PRIVATE Qt6::Quick3D
+    PRIVATE Qt6::SerialPort
 )
 
 install(TARGETS appFXOS8700_Visualizer
