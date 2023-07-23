@@ -12,6 +12,7 @@ class SerialManager : public QObject
   Q_PROPERTY(float pitch READ pitch WRITE setPitch NOTIFY pitchChanged);
 public:
   explicit SerialManager(QObject *parent = nullptr);
+  ~SerialManager();
 
   float roll() const;
   void setRoll(float newRoll);

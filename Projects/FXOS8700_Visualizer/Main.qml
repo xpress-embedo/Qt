@@ -13,10 +13,10 @@ Window {
   SerialManager {
     id: serialManager
     onRollChanged: {
-      cubeModel.eulerRotation.z = roll
+      cubeModel.eulerRotation.x = roll
     }
     onPitchChanged: {
-      cubeModel.eulerRotation.y = pitch
+      cubeModel.eulerRotation.z = pitch
     }
   }
 

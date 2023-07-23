@@ -11,7 +11,7 @@ SerialManager::SerialManager(QObject *parent)
   m_serial.setParity( QSerialPort::NoParity );
   m_serial.setStopBits( QSerialPort::OneStop );
   m_serial.setFlowControl( QSerialPort::NoFlowControl );
-  m_serial.setPortName( "COM2" );
+  m_serial.setPortName( "COM5" );
   if( m_serial.open( QIODevice::ReadWrite ) )
   {
     m_connectStatus = true;
@@ -24,6 +24,15 @@ SerialManager::SerialManager(QObject *parent)
   {
     m_connectStatus = false;
     qDebug() << "Unable to open the Selected Serial Port" << m_serial.error();
+  }
+}
+
+SerialManager::~SerialManager()
+{
+  // If serial port is open close it
+  if( m_serial.isOpen() )
+  {
+    m_serial.close();
   }
 }
 
