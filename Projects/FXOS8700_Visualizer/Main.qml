@@ -5,7 +5,8 @@ import QtQuick.Window
 import com.company.serialmanager 1.0
 
 Window {
-  width: 640
+  id: root
+  width: 540
   height: 480
   visible: true
   title: qsTr("FXOS8700 Data Visualizer")
@@ -83,7 +84,7 @@ Window {
 
   Text {
     id: textRoll
-    x: 250
+    x: root.width/2 - 60
     y: 20
     visible: true
     text: qsTr("Roll:")
@@ -103,7 +104,7 @@ Window {
 
   Text {
     id: textPitch
-    x: 250
+    x: root.width/2 - 60
     y: 50
     visible: true
     text: qsTr("Pitch:")
