@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(FXOS8700_Visualizer VERSION 0.1 LANGUAGES CXX)
+project(AccelerometerVisualizer VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -11,20 +11,20 @@ find_package(Qt6 6.2 REQUIRED COMPONENTS Quick3D)
 find_package(Qt6 6.2 REQUIRED COMPONENTS SerialPort)
 
 
-qt_add_executable(appFXOS8700_Visualizer
+qt_add_executable(appAccelerometerVisualizer
     main.cpp
     serialmanager.h serialmanager.cpp
     resources.qrc
 )
 
-qt_add_qml_module(appFXOS8700_Visualizer
+qt_add_qml_module(appAccelerometerVisualizer
     URI FXOS8700_Visualizer
     VERSION 1.0
     QML_FILES Main.qml
     RESOURCES resources.qrc
 )
 
-set_target_properties(appFXOS8700_Visualizer PROPERTIES
+set_target_properties(appAccelerometerVisualizer PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -32,12 +32,12 @@ set_target_properties(appFXOS8700_Visualizer PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-target_link_libraries(appFXOS8700_Visualizer
+target_link_libraries(appAccelerometerVisualizer
     PRIVATE Qt6::Quick
     PRIVATE Qt6::Quick3D
     PRIVATE Qt6::SerialPort
 )
 
-install(TARGETS appFXOS8700_Visualizer
+install(TARGETS appAccelerometerVisualizer
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

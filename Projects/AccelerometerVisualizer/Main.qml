@@ -9,7 +9,7 @@ Window {
   width: 540
   height: 480
   visible: true
-  title: qsTr("FXOS8700 Data Visualizer")
+  title: qsTr("Accelerometer Data Visualizer")
 
   SerialManager {
     id: serialManager
@@ -22,12 +22,12 @@ Window {
       textPitchValue.text = pitch.toFixed(2)
     }
   }
-
   Node {
     id: standAloneScene
     Model {
       id: cubeModel
       position: Qt.vector3d( 0, 0, 0)
+      scale: Qt.vector3d( 2, 0.5, 1)
       source: "#Cube"
       materials: [
         // DefaultMaterial { diffuseColor: "indianred"}
@@ -35,7 +35,6 @@ Window {
           diffuseMap: Texture {
             sourceItem: Item {
               anchors.fill: parent
-              // layer.enabled: true
               Rectangle {
                 anchors.fill: parent
                 color: "white"
@@ -43,17 +42,6 @@ Window {
               Image {
                 anchors.fill: parent
                 source: "qrc:/image/chip.png"
-              }
-              Text {
-                width: parent.width
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                color: "black"
-                font.pixelSize: 50
-                font.bold: true
-                text: qsTr("Accelerometer Demo")
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
               }
             }
           }
@@ -67,8 +55,17 @@ Window {
     anchors.fill: parent
     scale: 1
     environment: SceneEnvironment {
-      clearColor: "white"
+      clearColor: "#222222"
       backgroundMode: SceneEnvironment.Color
+      // No Antialiasing
+      // antialiasingMode: SceneEnvironment.NoAA
+      // Super Sample Antialiasing
+      antialiasingMode: SceneEnvironment.SSAA
+      // Multi Sample Antialiasing
+      // antialiasingMode: SceneEnvironment.MSAA
+
+      // Antialiasing Quality (Medium, High, VeryHigh)
+      antialiasingQuality: SceneEnvironment.VeryHigh
     }
     importScene: standAloneScene
     PerspectiveCamera {
@@ -90,6 +87,7 @@ Window {
     text: qsTr("Roll:")
     font.pixelSize: 20
     horizontalAlignment: Text.AlignLeft
+    color: "white"
   }
 
   Text {
@@ -100,6 +98,7 @@ Window {
     text: qsTr("0")
     font.pixelSize: 20
     horizontalAlignment: Text.AlignLeft
+    color: "white"
   }
 
   Text {
@@ -110,6 +109,7 @@ Window {
     text: qsTr("Pitch:")
     font.pixelSize: 20
     horizontalAlignment: Text.AlignLeft
+    color: "white"
   }
 
   Text {
@@ -120,5 +120,7 @@ Window {
     text: qsTr("0")
     font.pixelSize: 20
     horizontalAlignment: Text.AlignLeft
+    color: "white"
   }
 }
+
