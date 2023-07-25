@@ -11,7 +11,7 @@ SerialManager::SerialManager(QObject *parent)
   m_serial.setParity( QSerialPort::NoParity );
   m_serial.setStopBits( QSerialPort::OneStop );
   m_serial.setFlowControl( QSerialPort::NoFlowControl );
-  m_serial.setPortName( "COM5" );
+  m_serial.setPortName( "COM9" );
   if( m_serial.open( QIODevice::ReadWrite ) )
   {
     m_connectStatus = true;

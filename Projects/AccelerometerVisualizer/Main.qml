@@ -41,7 +41,7 @@ Window {
               }
               Image {
                 anchors.fill: parent
-                source: "qrc:/image/chip.png"
+                source: "qrc:/chip.png"
               }
             }
           }

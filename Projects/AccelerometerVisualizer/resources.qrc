@@ -1,6 +1,6 @@
 <RCC>
-    <qresource prefix="/image">
-        <file>qt_logo.png</file>
+    <qresource prefix="/">
         <file>chip.png</file>
+        <file>qt_logo.png</file>
     </qresource>
 </RCC>
