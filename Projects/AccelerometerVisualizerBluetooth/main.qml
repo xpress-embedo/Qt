@@ -1,20 +1,27 @@
 import QtQuick
 import QtQuick3D
 import QtQuick.Window
+import QtQuick.Controls
+
+import com.company.bluetoothmanager 1.0
 
 Window {
   id: root
-  width: 640
-  height: 480
+  width: 300
+  height: 600
   visible: true
   title: qsTr("Accelerometer Data Visualizer")
+
+  BluetoohManager {
+    id: bluetoothManager
+  }
 
   Node {
     id: standAloneScene
     Model {
       id: cubeModel
       position: Qt.vector3d( 0, 0, 0)
-      scale: Qt.vector3d( 2, 0.5, 1)
+      scale: Qt.vector3d( 1, 0.25, 0.5)
       source: "#Cube"
       materials: [
         // DefaultMaterial { diffuseColor: "indianred"}
@@ -69,7 +76,9 @@ Window {
   Text {
     id: textRoll
     x: root.width/2 - 60
-    y: 20
+    y: 100
+    width: 60
+    height: 25
     visible: true
     text: qsTr("Roll:")
     font.pixelSize: 20
@@ -81,6 +90,8 @@ Window {
     id: textRollValue
     x: textRoll.x + 80
     y: textRoll.y
+    width: 60
+    height: 25
     visible: true
     text: qsTr("0")
     font.pixelSize: 20
@@ -91,7 +102,9 @@ Window {
   Text {
     id: textPitch
     x: root.width/2 - 60
-    y: 50
+    y: 150
+    width: 60
+    height: 25
     visible: true
     text: qsTr("Pitch:")
     font.pixelSize: 20
@@ -103,10 +116,22 @@ Window {
     id: textPitchValue
     x: textPitch.x + 80
     y: textPitch.y
+    width: 60
+    height: 25
     visible: true
     text: qsTr("0")
     font.pixelSize: 20
     horizontalAlignment: Text.AlignLeft
     color: "white"
+  }
+
+  ComboBox {
+    id: cbdeviceName
+    x: 10
+    y: 10
+    width: root.width*2/3
+    height: 50
+    model: bluetoothManager.detectedDevices
+
   }
 }
