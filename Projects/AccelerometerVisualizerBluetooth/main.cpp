@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
   qmlRegisterType<BluetoothManager>("com.company.bluetoothmanager", 1, 0, "BluetoohManager" );
 
   QQmlApplicationEngine engine;
-  const QUrl url(u"qrc:/AccelerometerVisualizerBluetooth/main.qml"_qs);
+  const QUrl url(u"qrc:/AccelerometerVisualizerBluetooth/Main.qml"_qs);
   QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
       &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
