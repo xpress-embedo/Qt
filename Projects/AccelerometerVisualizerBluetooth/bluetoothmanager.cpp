@@ -15,14 +15,22 @@ BluetoothManager::BluetoothManager(QObject *parent)
 void BluetoothManager::deviceDiscovered(const QBluetoothDeviceInfo &device)
 {
   qDebug() << device.name();
-  // Check if the device name is already present or not
-  if( !m_detectedDevices.contains(device.name()) )
+  if( !m_detectedDevicesList.contains(device.name()) )
   {
-    m_detectedDevices.append(device.name());
+    m_detectedDevicesList.append( device.name() );
+    emit detectedDevicesListChanged();
   }
 }
 
-QStringList BluetoothManager::detectedDevices() const
+QStringList BluetoothManager::detectedDevicesList() const
 {
-  return m_detectedDevices;
+  return m_detectedDevicesList;
+}
+
+void BluetoothManager::setDetectedDevicesList(const QStringList &newDetectedDevicesList)
+{
+  if (m_detectedDevicesList == newDetectedDevicesList)
+    return;
+  m_detectedDevicesList = newDetectedDevicesList;
+  emit detectedDevicesListChanged();
 }

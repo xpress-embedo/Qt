@@ -14,6 +14,9 @@ Window {
 
   BluetoohManager {
     id: bluetoothManager
+    onDetectedDevicesListChanged: {
+      cbdeviceName.model = bluetoothManager.detectedDevicesList;
+    }
   }
 
   Node {
@@ -132,6 +135,5 @@ Window {
     width: root.width*2/3
     height: 50
     model: bluetoothManager.detectedDevices
-
   }
 }
