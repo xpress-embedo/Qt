@@ -79,7 +79,7 @@ Window {
   Text {
     id: textRoll
     x: root.width/2 - 60
-    y: 100
+    y: 200
     width: 60
     height: 25
     visible: true
@@ -105,7 +105,7 @@ Window {
   Text {
     id: textPitch
     x: root.width/2 - 60
-    y: 150
+    y: 240
     width: 60
     height: 25
     visible: true
@@ -130,10 +130,40 @@ Window {
 
   ComboBox {
     id: cbdeviceName
-    x: 10
-    y: 10
-    width: root.width*2/3
-    height: 50
+    y: 20
+    width: root.width*8/10
+    height: 40
+    anchors.horizontalCenter: parent.horizontalCenter
     model: bluetoothManager.detectedDevices
+    background: Rectangle {
+      color: "white"
+    }
+  }
+
+  Button {
+    id: btnConnect
+    x: 0
+    y: cbdeviceName.y + 100
+    width: cbdeviceName.width/2.5
+    height: 40
+    text: qsTr("Connect")
+  }
+
+  Button {
+    id: btnDisconnect
+    anchors.horizontalCenter: cbdeviceName.horizontalCenter
+    y: btnConnect.y
+    width: btnConnect.width
+    height: 40
+    text: qsTr("Disconnect")
+  }
+
+  Button {
+    id: btnSearch
+    x: root.width - btnSearch.width
+    y: btnConnect.y
+    width: btnConnect.width
+    height: 40
+    text: qsTr("Search")
   }
 }
