@@ -156,6 +156,7 @@ Window {
     width: btnConnect.width
     height: 40
     text: qsTr("Disconnect")
+    enabled: false
   }
 
   Button {
@@ -165,5 +166,6 @@ Window {
     width: btnConnect.width
     height: 40
     text: qsTr("Search")
+    enabled: false
   }
 }

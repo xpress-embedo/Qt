@@ -14,10 +14,10 @@ BluetoothManager::BluetoothManager(QObject *parent)
 
 void BluetoothManager::deviceDiscovered(const QBluetoothDeviceInfo &device)
 {
-  qDebug() << device.name();
-  if( !m_detectedDevicesList.contains(device.name()) )
+  qDebug() << "Device Name:" << device.name() << "Device Address:" << device.address();
+  if( !m_detectedDevicesList.contains(device.address().toString()) )
   {
-    m_detectedDevicesList.append( device.name() );
+    m_detectedDevicesList.append( device.address().toString() );
     emit detectedDevicesListChanged();
   }
 }
