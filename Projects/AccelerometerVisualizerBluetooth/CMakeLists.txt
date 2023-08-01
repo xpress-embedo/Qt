@@ -7,6 +7,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
+find_package(Qt6 6.2 REQUIRED COMPONENTS QuickControls2)
 find_package(Qt6 6.2 REQUIRED COMPONENTS Bluetooth)
 
 
@@ -38,6 +39,7 @@ set_target_properties(appAccelerometerVisualizerBluetooth PROPERTIES
 
 target_link_libraries(appAccelerometerVisualizerBluetooth
     PRIVATE Qt6::Quick
+    PRIVATE Qt6::QuickControls2
     PRIVATE Qt6::Bluetooth
 )
 

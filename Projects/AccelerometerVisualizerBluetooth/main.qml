@@ -12,13 +12,6 @@ Window {
   visible: true
   title: qsTr("Accelerometer Data Visualizer")
 
-  BluetoohManager {
-    id: bluetoothManager
-    onDetectedDevicesListChanged: {
-      cbdeviceName.model = bluetoothManager.detectedDevicesList;
-    }
-  }
-
   Node {
     id: standAloneScene
     Model {
@@ -128,15 +121,33 @@ Window {
     color: "white"
   }
 
+  BluetoohManager {
+    id: bluetoothManager
+    onDetectedDevicesListChanged: {
+      cbdeviceName.model = bluetoothManager.detectedDevicesList;
+    }
+    onSelectedDeviceChanged: {
+      console.log("Selected Device Changed");
+    }
+  }
+
   ComboBox {
     id: cbdeviceName
     y: 20
     width: root.width*8/10
     height: 40
+    font.pointSize: 12
     anchors.horizontalCenter: parent.horizontalCenter
     model: bluetoothManager.detectedDevices
     background: Rectangle {
       color: "white"
+    }
+    onCurrentTextChanged: {
+      console.log("Device Selected: ", cbdeviceName.currentText );
+      // TODO: not able to understand why this is not working, in previous
+      // projects it was working, so as a work around using the selectedDevice
+      // bluetoothManager.setSelectedDevice(cbdeviceName.currentText);
+      bluetoothManager.selectedDevice = cbdeviceName.currentText;
     }
   }
 
@@ -147,6 +158,17 @@ Window {
     width: cbdeviceName.width/2.5
     height: 40
     text: qsTr("Connect")
+    font.pointSize: 11
+    background: Rectangle {
+      anchors.fill: parent
+    }
+    onClicked: {
+      enabled = false
+      btnDisconnect.enabled = true
+      // TODO
+      // bluetoothManager.setConnStatus(true);
+      bluetoothManager.connStatus = true;
+    }
   }
 
   Button {
@@ -156,7 +178,17 @@ Window {
     width: btnConnect.width
     height: 40
     text: qsTr("Disconnect")
+    font.pointSize: 11
     enabled: false
+    background: Rectangle {
+      anchors.fill: parent
+    }
+    onClicked: {
+      enabled = false
+      btnConnect.enabled = true
+      // bluetoothManager.setConnStatus(false);
+      bluetoothManager.connStatus = false;
+    }
   }
 
   Button {
@@ -166,6 +198,10 @@ Window {
     width: btnConnect.width
     height: 40
     text: qsTr("Search")
+    font.pointSize: 11
     enabled: false
+    background: Rectangle {
+      anchors.fill: parent
+    }
   }
 }

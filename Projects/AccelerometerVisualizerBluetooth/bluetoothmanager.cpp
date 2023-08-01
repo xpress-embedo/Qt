@@ -14,11 +14,19 @@ BluetoothManager::BluetoothManager(QObject *parent)
 
 void BluetoothManager::deviceDiscovered(const QBluetoothDeviceInfo &device)
 {
-  qDebug() << "Device Name:" << device.name() << "Device Address:" << device.address();
-  if( !m_detectedDevicesList.contains(device.address().toString()) )
+  // Store only if device name is not empty
+  if( device.name() != "" )
   {
-    m_detectedDevicesList.append( device.address().toString() );
-    emit detectedDevicesListChanged();
+    qDebug() << "Device Name:" << device.name() << "Device Address:" << device.address();
+    if( !m_detectedDevicesList.contains(device.name()) )
+    {
+      // Saving the device name, useful for displaying purpose on front end
+      m_detectedDevicesList.append( device.name() );
+      // Saving the device address, useful for communication
+      // Best approach should be to use the dictionary with device name as key value
+      m_detectedDevicesAddressList.append( device.address().toString() );
+      emit detectedDevicesListChanged();
+    }
   }
 }
 
@@ -33,4 +41,31 @@ void BluetoothManager::setDetectedDevicesList(const QStringList &newDetectedDevi
     return;
   m_detectedDevicesList = newDetectedDevicesList;
   emit detectedDevicesListChanged();
+}
+
+QString BluetoothManager::selectedDevice() const
+{
+  return m_selectedDevice;
+}
+
+void BluetoothManager::setSelectedDevice(const QString &newSelectedDevice)
+{
+  if (m_selectedDevice == newSelectedDevice)
+    return;
+  m_selectedDevice = newSelectedDevice;
+  emit selectedDeviceChanged();
+}
+
+bool BluetoothManager::connStatus() const
+{
+  return m_connStatus;
+}
+
+void BluetoothManager::setConnStatus(bool newConnStatus)
+{
+  if (m_connStatus == newConnStatus)
+    return;
+  m_connStatus = newConnStatus;
+  qDebug() << "Connection Status: " << (m_connStatus ? "TRUE":"FALSE");
+  emit connStatusChanged();
 }
