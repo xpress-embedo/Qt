@@ -135,11 +135,14 @@ Window {
       {
         btnConnect.enabled = false;
         btnDisconnect.enabled = true;
+        cbdeviceName.enabled = false;
       }
       else
       {
         btnConnect.enabled = true;
         btnDisconnect.enabled = false;
+        btnSearch.enabled = true;
+        cbdeviceName.enabled = true;
       }
     }
     onRollChanged:
@@ -158,7 +161,7 @@ Window {
     y: 20
     width: root.width*8/10
     height: 40
-    font.pointSize: 12
+    font.pointSize: 14
     anchors.horizontalCenter: parent.horizontalCenter
     model: bluetoothManager.detectedDevices
     background: Rectangle {
@@ -180,15 +183,11 @@ Window {
     width: cbdeviceName.width/2.5
     height: 40
     text: qsTr("Connect")
-    font.pointSize: 11
+    font.pointSize: 12
     background: Rectangle {
       anchors.fill: parent
     }
     onClicked: {
-      // enabled = false
-      // btnDisconnect.enabled = true
-      // TODO
-      // bluetoothManager.setConnStatus(true);
       bluetoothManager.connStatus = true;
     }
   }
@@ -200,15 +199,13 @@ Window {
     width: btnConnect.width
     height: 40
     text: qsTr("Disconnect")
-    font.pointSize: 11
+    font.pointSize: 12
     enabled: false
     background: Rectangle {
       anchors.fill: parent
     }
     onClicked: {
       enabled = false
-      btnConnect.enabled = true
-      // bluetoothManager.setConnStatus(false);
       bluetoothManager.connStatus = false;
     }
   }
@@ -220,10 +217,13 @@ Window {
     width: btnConnect.width
     height: 40
     text: qsTr("Search")
-    font.pointSize: 11
+    font.pointSize: 12
     enabled: false
     background: Rectangle {
       anchors.fill: parent
+    }
+    onClicked: {
+
     }
   }
 }

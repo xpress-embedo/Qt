@@ -124,10 +124,13 @@ bool BluetoothManager::connStatus() const
 void BluetoothManager::setConnStatus(bool newConnStatus)
 {
   qsizetype idx;
+  /* Whenever connect button is pressed, I am stopping further discovery of
+   * bluetooth devices */
   agent->stop();
   if (m_connStatus == newConnStatus)
     return;
-  // don't update here, instead update the member in connected and disconnected methods
+  /* don't update here the connection status, instead update the member in
+   * connected & disconnected methods, because that will emit the correct status*/
   // m_connStatus = newConnStatus;
   qDebug() << "Old Status: " << m_connStatus << ", New Status: " << (newConnStatus ? "TRUE":"FALSE");
   if( newConnStatus == true )
@@ -148,10 +151,10 @@ void BluetoothManager::setConnStatus(bool newConnStatus)
   }
   else
   {
-    // call disconnected function
+    /* call disconnected function */
     disconnected();
   }
-  // Trigger signal when connection is established or disconnected
+  // Trigger signal when connection is established or disconnected, not from here
   // emit connStatusChanged();
 }
 
