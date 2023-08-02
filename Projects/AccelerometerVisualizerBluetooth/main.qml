@@ -129,6 +129,19 @@ Window {
     onSelectedDeviceChanged: {
       console.log("Selected Device Changed");
     }
+    onConnStatusChanged: {
+      console.log("Connection Status Changed");
+      if( bluetoothManager.connStatus == true )
+      {
+        btnConnect.enabled = false;
+        btnDisconnect.enabled = true;
+      }
+      else
+      {
+        btnConnect.enabled = true;
+        btnDisconnect.enabled = false;
+      }
+    }
   }
 
   ComboBox {
@@ -163,8 +176,8 @@ Window {
       anchors.fill: parent
     }
     onClicked: {
-      enabled = false
-      btnDisconnect.enabled = true
+      // enabled = false
+      // btnDisconnect.enabled = true
       // TODO
       // bluetoothManager.setConnStatus(true);
       bluetoothManager.connStatus = true;

@@ -27,6 +27,10 @@ public:
 
 private slots:
   void deviceDiscovered( const QBluetoothDeviceInfo &device);
+  void readyRead();
+  void connected();
+  void disconnected();
+  void onSocketErrorOccurred(QBluetoothSocket::SocketError);
 
 signals:
 
