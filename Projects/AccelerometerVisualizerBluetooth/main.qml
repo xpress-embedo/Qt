@@ -142,6 +142,15 @@ Window {
         btnDisconnect.enabled = false;
       }
     }
+    onRollChanged:
+    {
+      cubeModel.eulerRotation.x = roll;
+      textRollValue.text = roll.toFixed(2)
+    }
+    onPitchChanged: {
+      cubeModel.eulerRotation.z = (-1.0)*pitch;
+      textPitchValue.text = pitch.toFixed(2)
+    }
   }
 
   ComboBox {
