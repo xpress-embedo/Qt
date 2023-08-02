@@ -63,9 +63,24 @@ bool BluetoothManager::connStatus() const
 
 void BluetoothManager::setConnStatus(bool newConnStatus)
 {
+  qsizetype idx;
+  agent->stop();
+  /*
   if (m_connStatus == newConnStatus)
     return;
+  */
   m_connStatus = newConnStatus;
   qDebug() << "Connection Status: " << (m_connStatus ? "TRUE":"FALSE");
+  if( m_connStatus == true )
+  {
+    // static const QString serviceUuid(QStringLiteral("00001101-0000-1000-8000-00805F9B34FB"));
+    idx = m_detectedDevicesList.indexOf(m_selectedDevice);
+    if( idx >= 0 )
+    {
+      qDebug() << "Index: " << idx << ", Address: " << m_detectedDevicesAddressList[idx];
+    }
+
+    // socket = new QBluetoothSocket(QBluetoothAddress(), QBluetoothUuid(serviceUuid), QIODevice::ReadWrite );
+  }
   emit connStatusChanged();
 }

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QtBluetooth>
 #include <QBluetoothDeviceDiscoveryAgent>
-#include <QBluetoothLocalDevice>
+#include <QBluetoothSocket>
 #include <QDebug>
 
 class BluetoothManager : public QObject
@@ -38,6 +38,7 @@ signals:
 
 private:
   QBluetoothDeviceDiscoveryAgent *agent = new QBluetoothDeviceDiscoveryAgent;
+  QBluetoothSocket *socket;
   QString m_deviceName;
   QStringList m_detectedDevicesList;
   QStringList m_detectedDevicesAddressList;
