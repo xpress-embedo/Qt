@@ -22,8 +22,6 @@ qt_add_qml_module(appAccelerometerVisualizerBluetooth
     QML_FILES Main.qml
     SOURCES bluetoothmanager.h bluetoothmanager.cpp
     RESOURCES resources.qrc
-
-
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -35,6 +33,7 @@ set_target_properties(appAccelerometerVisualizerBluetooth PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+    QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android"
 )
 
 target_link_libraries(appAccelerometerVisualizerBluetooth

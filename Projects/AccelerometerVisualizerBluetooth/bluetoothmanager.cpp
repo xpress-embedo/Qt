@@ -6,6 +6,10 @@ QString localDeviceName;
 BluetoothManager::BluetoothManager(QObject *parent)
     : QObject{parent}
 {
+  /* Initialize members to default state here */
+  agent = new QBluetoothDeviceDiscoveryAgent;
+  m_connStatus = false;
+  m_triggerSearch = false;
   connect( agent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)), this, \
           SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
   agent->start();
@@ -182,4 +186,29 @@ void BluetoothManager::setPitch(float newPitch)
     return;
   m_pitch = newPitch;
   emit pitchChanged();
+}
+
+bool BluetoothManager::triggerSearch() const
+{
+  return m_triggerSearch;
+}
+
+void BluetoothManager::setTriggerSearch(bool newTriggerSearch)
+{
+  /* I need a trigger from QML code just to start the agent again, so basically
+   * I don't need to store any variable or update any status, also no need to
+   * emit a signal */
+  /*
+  if (m_triggerSearch == newTriggerSearch)
+    return;
+  m_triggerSearch = newTriggerSearch;
+  emit triggerSearchChanged();
+  */
+  agent->stop();
+  m_detectedDevicesList.clear();
+  m_detectedDevicesList.clear();
+  // emiting the signal, so that QML front-end can be refreshed
+  emit detectedDevicesListChanged();
+  // Start the agen again
+  agent->start();
 }

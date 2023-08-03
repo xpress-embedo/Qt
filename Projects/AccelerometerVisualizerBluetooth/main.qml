@@ -136,6 +136,7 @@ Window {
         btnConnect.enabled = false;
         btnDisconnect.enabled = true;
         cbdeviceName.enabled = false;
+        btnSearch.enabled = false;
       }
       else
       {
@@ -218,12 +219,13 @@ Window {
     height: 40
     text: qsTr("Search")
     font.pointSize: 12
-    enabled: false
+    enabled: true
     background: Rectangle {
       anchors.fill: parent
     }
     onClicked: {
-
+      console.log("Triggering Search Again");
+      bluetoothManager.triggerSearch = true;
     }
   }
 }
