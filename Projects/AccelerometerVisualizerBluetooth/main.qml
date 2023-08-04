@@ -225,7 +225,7 @@ Window {
     }
     onClicked: {
       console.log("Triggering Search Again");
-      bluetoothManager.triggerSearch = true;
+      bluetoothManager.searchButtonPressed();
     }
   }
 }

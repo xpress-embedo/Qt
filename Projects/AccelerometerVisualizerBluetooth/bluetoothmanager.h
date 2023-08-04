@@ -13,7 +13,6 @@ class BluetoothManager : public QObject
   Q_PROPERTY(QStringList detectedDevicesList READ detectedDevicesList WRITE setDetectedDevicesList NOTIFY detectedDevicesListChanged);
   Q_PROPERTY(QString selectedDevice READ selectedDevice WRITE setSelectedDevice NOTIFY selectedDeviceChanged);
   Q_PROPERTY(bool connStatus READ connStatus WRITE setConnStatus NOTIFY connStatusChanged);
-  Q_PROPERTY(bool triggerSearch READ triggerSearch WRITE setTriggerSearch NOTIFY triggerSearchChanged);
   Q_PROPERTY(float roll READ roll WRITE setRoll NOTIFY rollChanged);
   Q_PROPERTY(float pitch READ pitch WRITE setPitch NOTIFY pitchChanged);
 public:
@@ -34,15 +33,15 @@ public:
   float pitch() const;
   void setPitch(float newPitch);
 
-  bool triggerSearch() const;
-  void setTriggerSearch(bool newTriggerSearch);
-
 private slots:
   void deviceDiscovered( const QBluetoothDeviceInfo &device);
   void readyRead();
   void connected();
   void disconnected();
   void onSocketErrorOccurred(QBluetoothSocket::SocketError);
+
+public slots:
+  void searchButtonPressed(void);
 
 signals:
 
@@ -55,9 +54,6 @@ signals:
   void rollChanged();
 
   void pitchChanged();
-
-  void triggerSearchChanged();
-
 private:
   QBluetoothDeviceDiscoveryAgent *agent;
   QBluetoothSocket *socket;
@@ -68,7 +64,6 @@ private:
   bool m_connStatus;
   float m_roll;
   float m_pitch;
-  bool m_triggerSearch;
 };
 
 #endif // BLUETOOTHMANAGER_H
