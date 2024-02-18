@@ -56,15 +56,33 @@ Window {
     }
   }
 
-  Slider {
+  ColorSlider {
+    id: redSlider
     width: root.width/2
-    height: 20
-    anchors.bottom: row1.top
-    anchors.bottomMargin: -200
-    anchors.horizontalCenter: row1.horizontalCenter
-    antialiasing: true
-    snapMode: RangeSlider.SnapAlways
-    stepSize: 1
-    to: 255
+    height: root.height/15
+    sliderColor: "red"
+    anchors.verticalCenter: row1.verticalCenter
+    anchors.verticalCenterOffset: 80
+    anchors.horizontalCenter: parent.horizontalCenter
+  }
+
+  ColorSlider {
+    id: greenSlider
+    width: root.width/2
+    height: root.height/15
+    sliderColor: "green"
+    anchors.verticalCenter: redSlider.verticalCenter
+    anchors.verticalCenterOffset: 40
+    anchors.horizontalCenter: parent.horizontalCenter
+  }
+
+  ColorSlider {
+    id: blueSlider
+    width: root.width/2
+    height: root.height/15
+    sliderColor: "blue"
+    anchors.verticalCenter: greenSlider.verticalCenter
+    anchors.verticalCenterOffset: 40
+    anchors.horizontalCenter: parent.horizontalCenter
   }
 }
