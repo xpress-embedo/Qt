@@ -4,7 +4,10 @@ import QtQuick.Controls
 Item {
   id: root
   property color sliderColor: "#21be2b"
+  signal valueChanged(int newValue)
+
   Column {
+    id: column
     Slider {
       id: slider
       width: root.width * 9/10
@@ -38,6 +41,8 @@ Item {
       }
       onValueChanged: {
         lblSliderValue.text = slider.value
+        // emit the signal
+        root.valueChanged(slider.value)
       }
     }
 

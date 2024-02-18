@@ -10,6 +10,14 @@ Window {
   color: "#ffffff"
   title: qsTr("MQTT Device Control")
 
+  property int redValue: 128
+  property int greenValue: 128
+  property int blueValue: 128
+
+  function changeRectangleColor() {
+    colorRectangle.color = Qt.rgba(redValue/255, greenValue/255, blueValue/255, 1)
+  }
+
   Row {
     id: row1
     width: root.width/2
@@ -64,6 +72,17 @@ Window {
     anchors.verticalCenter: row1.verticalCenter
     anchors.verticalCenterOffset: 80
     anchors.horizontalCenter: parent.horizontalCenter
+    onValueChanged: function(newValue) {
+      console.log("Red Value: ", newValue);
+      redValue = newValue;
+      root.changeRectangleColor();
+    }
+    // the following method is deprecated, we need to use the above one
+    /*
+    onValueChanged: {
+      console.log("New Value:", newValue)
+    }
+    */
   }
 
   ColorSlider {
@@ -74,6 +93,11 @@ Window {
     anchors.verticalCenter: redSlider.verticalCenter
     anchors.verticalCenterOffset: 40
     anchors.horizontalCenter: parent.horizontalCenter
+    onValueChanged: function(newValue) {
+      console.log("Green Value: ", newValue);
+      greenValue = newValue;
+      root.changeRectangleColor();
+    }
   }
 
   ColorSlider {
@@ -84,5 +108,24 @@ Window {
     anchors.verticalCenter: greenSlider.verticalCenter
     anchors.verticalCenterOffset: 40
     anchors.horizontalCenter: parent.horizontalCenter
+    onValueChanged: function(newValue) {
+      console.log("Blue Value: ", newValue);
+      blueValue = newValue;
+      root.changeRectangleColor();
+    }
+  }
+
+  Rectangle {
+    id: colorRectangle
+    width: root.width/2
+    height: root.height/8
+    anchors.verticalCenter: blueSlider.verticalCenter
+    anchors.verticalCenterOffset: 80
+    anchors.horizontalCenter: parent.horizontalCenter
+    border.color: "black"
+  }
+
+  Component.onCompleted: {
+    root.changeRectangleColor();
   }
 }
