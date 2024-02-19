@@ -23,11 +23,13 @@ Window {
     width: root.width/2
     height: root.height/10
     anchors.top: parent.top
+    spacing: 10
     anchors.horizontalCenterOffset: 0
-    anchors.topMargin: 80
+    anchors.topMargin: 150
     anchors.horizontalCenter: parent.horizontalCenter
     Column {
       id: col1
+      spacing: 10
       Label {
         id: lblTemperature
         text: qsTr("Temperature:")
@@ -44,8 +46,10 @@ Window {
     }
     Column {
       id: col2
+      spacing: 10
       Label {
         id: lblTemperatureValue
+        width: 80
         text: qsTr("0 C")
         anchors.left: parent.left
         font.pixelSize: 20
@@ -55,6 +59,7 @@ Window {
 
       Label {
         id: lblHumidityValue
+        width: 80
         text: qsTr("0 %")
         anchors.left: parent.left
         font.pixelSize: 20
@@ -64,12 +69,24 @@ Window {
     }
   }
 
+  Switch {
+    id: switchLed
+    width: 100
+    height: 40
+    anchors.verticalCenter: row1.verticalCenter
+    antialiasing: true
+    anchors.verticalCenterOffset: 80
+    anchors.horizontalCenter: parent.horizontalCenter
+    text: qsTr("LED Switch")
+    // indicator: customization todo
+  }
+
   ColorSlider {
     id: redSlider
     width: root.width/2
     height: root.height/15
     sliderColor: "red"
-    anchors.verticalCenter: row1.verticalCenter
+    anchors.verticalCenter: switchLed.verticalCenter
     anchors.verticalCenterOffset: 80
     anchors.horizontalCenter: parent.horizontalCenter
     onValueChanged: function(newValue) {
@@ -123,6 +140,41 @@ Window {
     anchors.verticalCenterOffset: 80
     anchors.horizontalCenter: parent.horizontalCenter
     border.color: "black"
+  }
+
+  Row {
+    id: colConnectDisconnect
+    spacing: 40
+    width: root.width/2
+    anchors.top: parent.top
+    bottomPadding: 0
+    padding: 10
+    leftPadding: 0
+    rightPadding: 0
+    topPadding: 0
+    antialiasing: true
+    layoutDirection: Qt.LeftToRight
+    anchors.topMargin: 40
+    anchors.horizontalCenter: parent.horizontalCenter
+    Button {
+      id: btnConnect
+      width: 100
+      height: 40
+      text: qsTr("Connect")
+      font.pixelSize: 15
+      MouseArea {
+        anchors.fill: parent
+        // todo: future
+      }
+    }
+
+    Button {
+      id: btnDisconnect
+      width: 100
+      height: 40
+      text: qsTr("Disconnect")
+      font.pixelSize: 15
+    }
   }
 
   Component.onCompleted: {
