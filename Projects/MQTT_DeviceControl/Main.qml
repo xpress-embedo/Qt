@@ -22,11 +22,10 @@ Window {
     id: row1
     width: root.width/2
     height: root.height/10
-    anchors.top: parent.top
-    spacing: 10
-    anchors.horizontalCenterOffset: 0
-    anchors.topMargin: 150
+    anchors.top: colConnectDisconnect.bottom
+    anchors.topMargin: 40
     anchors.horizontalCenter: parent.horizontalCenter
+    spacing: 10
     Column {
       id: col1
       spacing: 10
@@ -74,9 +73,9 @@ Window {
     width: 100
     height: 40
     anchors.verticalCenter: row1.verticalCenter
+    anchors.horizontalCenter: parent.horizontalCenter
     antialiasing: true
     anchors.verticalCenterOffset: 80
-    anchors.horizontalCenter: parent.horizontalCenter
     text: qsTr("LED Switch")
     // indicator: customization todo
   }
@@ -156,24 +155,25 @@ Window {
     layoutDirection: Qt.LeftToRight
     anchors.topMargin: 40
     anchors.horizontalCenter: parent.horizontalCenter
-    Button {
+
+    CustomButton {
       id: btnConnect
       width: 100
       height: 40
-      text: qsTr("Connect")
-      font.pixelSize: 15
-      MouseArea {
-        anchors.fill: parent
-        // todo: future
+      buttonText: "Connect"
+      onClicked: {
+        console.log("Connect Button Clicked")
       }
     }
 
-    Button {
+    CustomButton {
       id: btnDisconnect
       width: 100
       height: 40
-      text: qsTr("Disconnect")
-      font.pixelSize: 15
+      buttonText: "Disconnect"
+      onClicked: {
+        console.log("Disconnect Button Clicked")
+      }
     }
   }
 
