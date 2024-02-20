@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Window
 import QtQuick.Controls
 
+import com.company.mqtthandler 1.0
+
 Window {
   id: root
   width: 480
@@ -16,6 +18,10 @@ Window {
 
   function changeRectangleColor() {
     colorRectangle.color = Qt.rgba(redValue/255, greenValue/255, blueValue/255, 1)
+  }
+
+  MqttHandler {
+    id: client
   }
 
   Row {
@@ -99,6 +105,10 @@ Window {
       console.log("New Value:", newValue)
     }
     */
+    onReleased: {
+      console.log("Publishing Message");
+      client.publish("my_topic", "hello world from Qt", 0, false );
+    }
   }
 
   ColorSlider {
@@ -162,7 +172,11 @@ Window {
       height: 40
       buttonText: "Connect"
       onClicked: {
-        console.log("Connect Button Clicked")
+        if( client.state !== MqttHandler.Connected )
+        {
+          client.connectToHost();
+          console.log("Connect with Host")
+        }
       }
     }
 
@@ -172,7 +186,11 @@ Window {
       height: 40
       buttonText: "Disconnect"
       onClicked: {
-        console.log("Disconnect Button Clicked")
+        if( client.state === MqttHandler.Connected )
+        {
+          client.disconnectFromHost();
+          console.log("Disconnect with Host")
+        }
       }
     }
   }

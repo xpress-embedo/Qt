@@ -5,11 +5,13 @@ project(MQTT_DeviceControl VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
+find_package(Qt6 6.2 REQUIRED COMPONENTS Quick Mqtt)
 
 
 qt_add_executable(appMQTT_DeviceControl
     main.cpp
+    mqtthandler.cpp
+    mqtthandler.h
 )
 
 qt_add_qml_module(appMQTT_DeviceControl
@@ -19,6 +21,7 @@ qt_add_qml_module(appMQTT_DeviceControl
     QML_FILES ColorSlider.qml
     QML_FILES CustomButton.qml
     QML_FILES CustomSwitch.qml
+    SOURCES mqtthandler.h mqtthandler.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -34,6 +37,7 @@ set_target_properties(appMQTT_DeviceControl PROPERTIES
 
 target_link_libraries(appMQTT_DeviceControl
     PRIVATE Qt6::Quick
+            Qt6::Mqtt
 )
 
 include(GNUInstallDirs)

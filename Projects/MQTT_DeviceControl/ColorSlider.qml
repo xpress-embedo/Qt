@@ -5,6 +5,7 @@ Item {
   id: root
   property color sliderColor: "#21be2b"
   signal valueChanged(int newValue)
+  signal released()
 
   Column {
     id: column
@@ -43,6 +44,16 @@ Item {
         lblSliderValue.text = slider.value
         // emit the signal
         root.valueChanged(slider.value)
+      }
+      onPressedChanged: {
+        if( pressed ) {
+          // console.log("Pressed");
+        }
+        else {
+          // console.log("Released");
+          // emit the signal
+          root.released();
+        }
       }
     }
 
