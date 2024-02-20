@@ -3,10 +3,10 @@ import QtQuick.Controls
 
 Item {
   id: root
-  property color colorBorder: "lightgrey"
+  property color colorBorder: "#9fa6b2"     // light gray
   property color colorNormal: "lightgrey"
   property color colorPressed: "darkgrey"
-  property color colorHover: "lightgreen"
+  property color colorHover: "#14a44d"      // greenish
   property string buttonText: "button"
 
   signal clicked()

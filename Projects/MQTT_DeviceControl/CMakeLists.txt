@@ -18,6 +18,7 @@ qt_add_qml_module(appMQTT_DeviceControl
     QML_FILES Main.qml
     QML_FILES ColorSlider.qml
     QML_FILES CustomButton.qml
+    QML_FILES CustomSwitch.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

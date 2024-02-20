@@ -68,7 +68,8 @@ Window {
     }
   }
 
-  Switch {
+
+  CustomSwitch {
     id: switchLed
     width: 100
     height: 40
@@ -77,7 +78,6 @@ Window {
     antialiasing: true
     anchors.verticalCenterOffset: 80
     text: qsTr("LED Switch")
-    // indicator: customization todo
   }
 
   ColorSlider {
