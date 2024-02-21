@@ -2,7 +2,10 @@
 #include <QDebug>
 #include <QMqttTopicName>
 
-
+/**
+ * @brief Constructor Function to initialize the MQTT client
+ * @param parent 
+ */
 MqttHandler::MqttHandler(QObject *parent)
   : QObject{parent}
 {
@@ -10,22 +13,41 @@ MqttHandler::MqttHandler(QObject *parent)
   m_client.setHostname("test.mosquitto.org");
   m_client.setPort(1883);
 
+  // attaching signal slot for mqtt connection successful
   connect(&m_client, &QMqttClient::connected, this, &MqttHandler::onConnected);
+  // attaching signal slot for mqtt message received for subscribed topic
   connect(&m_client, &QMqttClient::messageReceived, this, &MqttHandler::onMessageReceived);
 }
 
+/**
+ * @brief Qt Invokable Function which makes them accesible from QML, this is
+ *        used to connect with mqtt host
+ */
 void MqttHandler::connectToHost()
 {
   qDebug() << "Connect with Host";
   m_client.connectToHost();
 }
 
+/**
+ * @brief Qt Invokable Function which makes them accesible from QML, this is
+ *        used to disconnect with mqtt host
+ */
 void MqttHandler::disconnectFromHost()
 {
   qDebug() << "Disconnect with Host";
   m_client.disconnectFromHost();
 }
 
+/**
+ * @brief Qt Invokable Function which makes it accessible from QML, this is used
+ *        to publish the topic with message and some other information
+ * @param topic   topic name
+ * @param message message
+ * @param qos     quality of service
+ * @param retain  true or false
+ * @return status
+ */
 int MqttHandler::publish(const QString &topic, const QString &message, int qos, bool retain)
 {
   qDebug() << "Publishing Message";
@@ -33,11 +55,19 @@ int MqttHandler::publish(const QString &topic, const QString &message, int qos, 
   return result;
 }
 
+/**
+ * @brief MQTT connection status
+ * @return MqttHandler.Connected if connected else not
+ */
 QMqttClient::ClientState MqttHandler::state() const
 {
   return m_client.state();
 }
 
+/**
+ * @brief Set the MQTT State
+ * @param newState 
+ */
 void MqttHandler::setState(const QMqttClient::ClientState &newState)
 {
   m_client.setState(newState);
@@ -45,7 +75,11 @@ void MqttHandler::setState(const QMqttClient::ClientState &newState)
   emit stateChanged();
 }
 
-
+/**
+ * @brief Private Slot when MQTT client is connected with Host
+ *        Here we do subscription of the topics
+ * @param none
+ */
 void MqttHandler::onConnected(void)
 {
   // always subscribe after connection is successful
@@ -53,9 +87,13 @@ void MqttHandler::onConnected(void)
   qDebug() << "Connected and Subscribed to topic";
 }
 
+/**
+ * @brief Private Slot when MQTT client receives a topic with message
+ * @param message message information
+ * @param topic   topic information, use topic.name to get the topic name
+ */
 void MqttHandler::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic)
 {
-  // qDebug() << "Message Received";
   // check if SensorData is received
   if( topic.name() == topic1 )
   {
@@ -75,13 +113,22 @@ void MqttHandler::onMessageReceived(const QByteArray &message, const QMqttTopicN
       setHumidity(humidity);
     }
   }
+  // similarly we can do checks for other topics here
 }
 
+/**
+ * @brief Get Temperature Value
+ * @return QString value as temperature
+ */
 QString MqttHandler::temperature() const
 {
   return m_temperature;
 }
 
+/**
+ * @brief Set the Temperature Value, and emit the signal
+ * @param newTemperature 
+ */
 void MqttHandler::setTemperature(const QString &newTemperature)
 {
   if (m_temperature == newTemperature)
@@ -90,11 +137,19 @@ void MqttHandler::setTemperature(const QString &newTemperature)
   emit temperatureChanged();
 }
 
+/**
+ * @brief Get Humidity Value
+ * @return QString value as Humidity
+ */
 QString MqttHandler::humidity() const
 {
   return m_humidity;
 }
 
+/**
+ * @brief Set the Humidity Value, and emit the signal
+ * @param newHumidity
+ */
 void MqttHandler::setHumidity(const QString &newHumidity)
 {
   if (m_humidity == newHumidity)
