@@ -19,6 +19,13 @@ Window {
   function changeRectangleColor() {
     colorRectangle.color = Qt.rgba(redValue/255, greenValue/255, blueValue/255, 1)
   }
+  function publishMessage() {
+    // console.log("Publishing Message");
+    // combine RGB values to form RGB color
+    let rgbValue = (redValue << 16) | (greenValue << 8) | (blueValue)
+    // publish the RGB color value with topic "LedColor"
+    client.publish("LedColor", rgbValue, 0, false );
+  }
 
   MqttHandler {
     id: client
@@ -95,7 +102,7 @@ Window {
     anchors.verticalCenterOffset: 80
     anchors.horizontalCenter: parent.horizontalCenter
     onValueChanged: function(newValue) {
-      console.log("Red Value: ", newValue);
+      // console.log("Red Value: ", newValue);
       redValue = newValue;
       root.changeRectangleColor();
     }
@@ -106,8 +113,7 @@ Window {
     }
     */
     onReleased: {
-      console.log("Publishing Message");
-      client.publish("my_topic", "hello world from Qt", 0, false );
+      root.publishMessage();
     }
   }
 
@@ -120,9 +126,12 @@ Window {
     anchors.verticalCenterOffset: 40
     anchors.horizontalCenter: parent.horizontalCenter
     onValueChanged: function(newValue) {
-      console.log("Green Value: ", newValue);
+      // console.log("Green Value: ", newValue);
       greenValue = newValue;
       root.changeRectangleColor();
+    }
+    onReleased: {
+      root.publishMessage();
     }
   }
 
@@ -135,9 +144,12 @@ Window {
     anchors.verticalCenterOffset: 40
     anchors.horizontalCenter: parent.horizontalCenter
     onValueChanged: function(newValue) {
-      console.log("Blue Value: ", newValue);
+      // console.log("Blue Value: ", newValue);
       blueValue = newValue;
       root.changeRectangleColor();
+    }
+    onReleased: {
+      root.publishMessage();
     }
   }
 
@@ -175,7 +187,7 @@ Window {
         if( client.state !== MqttHandler.Connected )
         {
           client.connectToHost();
-          console.log("Connect with Host")
+          // console.log("Connect with Host")
         }
       }
     }
@@ -189,7 +201,7 @@ Window {
         if( client.state === MqttHandler.Connected )
         {
           client.disconnectFromHost();
-          console.log("Disconnect with Host")
+          // console.log("Disconnect with Host")
         }
       }
     }

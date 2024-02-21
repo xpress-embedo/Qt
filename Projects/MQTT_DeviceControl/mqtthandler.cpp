@@ -2,12 +2,16 @@
 #include <QDebug>
 #include <QMqttTopicName>
 
+
 MqttHandler::MqttHandler(QObject *parent)
   : QObject{parent}
 {
   // hard-coding the hostname and port for now
   m_client.setHostname("test.mosquitto.org");
   m_client.setPort(1883);
+
+  connect(&m_client, &QMqttClient::connected, this, &MqttHandler::onConnected);
+  connect(&m_client, &QMqttClient::messageReceived, this, &MqttHandler::onMessageReceived);
 }
 
 void MqttHandler::connectToHost()
@@ -39,4 +43,34 @@ void MqttHandler::setState(const QMqttClient::ClientState &newState)
   m_client.setState(newState);
   qDebug() << "Connection State Changed";
   emit stateChanged();
+}
+
+
+void MqttHandler::onConnected(void)
+{
+  // always subscribe after connection is successful
+  m_client.subscribe(QMqttTopicFilter(topic1));
+  qDebug() << "Connected and Subscribed to topic";
+}
+
+void MqttHandler::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic)
+{
+  // qDebug() << "Message Received";
+  // check if SensorData is received
+  if( topic.name() == topic1 )
+  {
+    // Convert QByteArray to QString
+    QString string = QString::fromUtf8(message);
+    // Split the QString based on the comma delimiter
+    QStringList values = string.split(',');
+    // Extract values
+    if (values.size() == 2)
+    {
+      QString temperature = values.at(0);
+      QString humidity = values.at(1);
+      // Output values
+      qDebug() << "Temperature: " << temperature;
+      qDebug() << "Humdity:" << humidity;
+    }
+  }
 }

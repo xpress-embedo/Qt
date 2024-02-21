@@ -24,7 +24,12 @@ signals:
 
   void stateChanged();
 
+private slots:
+  void onConnected(void);
+  void onMessageReceived(const QByteArray &message, const QMqttTopicName &topic);
+
 private:
+  QString topic1 = "SensorData";
   QMqttClient m_client;
 };
 
