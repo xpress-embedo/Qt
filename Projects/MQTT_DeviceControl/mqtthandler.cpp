@@ -71,6 +71,34 @@ void MqttHandler::onMessageReceived(const QByteArray &message, const QMqttTopicN
       // Output values
       qDebug() << "Temperature: " << temperature;
       qDebug() << "Humdity:" << humidity;
+      setTemperature(temperature);
+      setHumidity(humidity);
     }
   }
+}
+
+QString MqttHandler::temperature() const
+{
+  return m_temperature;
+}
+
+void MqttHandler::setTemperature(const QString &newTemperature)
+{
+  if (m_temperature == newTemperature)
+    return;
+  m_temperature = newTemperature;
+  emit temperatureChanged();
+}
+
+QString MqttHandler::humidity() const
+{
+  return m_humidity;
+}
+
+void MqttHandler::setHumidity(const QString &newHumidity)
+{
+  if (m_humidity == newHumidity)
+    return;
+  m_humidity = newHumidity;
+  emit humidityChanged();
 }

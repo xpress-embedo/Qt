@@ -29,6 +29,12 @@ Window {
 
   MqttHandler {
     id: client
+    onTemperatureChanged: {
+      lblTemperatureValue.text = client.temperature + " \u00B0C"
+    }
+    onHumidityChanged: {
+      lblHumidityValue.text = client.humidity + " %"
+    }
   }
 
   Row {
