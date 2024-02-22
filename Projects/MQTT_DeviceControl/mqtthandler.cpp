@@ -130,7 +130,14 @@ void MqttHandler::onMessageReceived(const QByteArray &message, const QMqttTopicN
 
   if( topic.name() == topic3 )
   {
-    qDebug() << "topic3 received";
+    // qDebug() << "Topic3 Received:" << message;
+    quint8 ledState = message.toUShort(&ok);
+    if( ok )
+    {
+      // convert positive value as 1 and 0 as zero
+      ledState = ledState > 0 ? 1:0;
+      setLed(ledState);
+    }
   }
 }
 

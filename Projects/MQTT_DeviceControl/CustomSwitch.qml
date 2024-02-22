@@ -1,8 +1,11 @@
 import QtQuick
 import QtQuick.Controls
 
+// note this is not a item, this is a customized switch
+// hence we don't need any custom signal and property alias in main file
 Switch {
   id: control
+
   indicator: Rectangle {
     implicitHeight: 40
     implicitWidth: 80

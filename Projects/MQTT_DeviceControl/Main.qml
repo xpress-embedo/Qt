@@ -19,6 +19,7 @@ Window {
   function changeRectangleColor() {
     colorRectangle.color = Qt.rgba(redValue/255, greenValue/255, blueValue/255, 1)
   }
+
   function publishMessage() {
     // console.log("Publishing Message");
     // combine RGB values to form RGB color
@@ -45,6 +46,9 @@ Window {
       redSlider.text = redValue;
       greenSlider.text = greenValue;
       blueSlider.text = blueValue
+    }
+    onLedChanged: {
+      switchLed.checked = led;
     }
   }
 
@@ -108,6 +112,17 @@ Window {
     antialiasing: true
     anchors.verticalCenterOffset: 80
     text: qsTr("LED Switch")
+    onToggled: {
+      // console.log("Toggled: ", switchLed.checked)
+      if( switchLed.checked === true )
+      {
+        client.publish("LedTopic", "1", 0, false);
+      }
+      else
+      {
+        client.publish("LedTopic", "0", 0, false);
+      }
+    }
   }
 
   ColorSlider {
