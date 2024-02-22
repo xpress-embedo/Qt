@@ -24,7 +24,7 @@ Window {
     // combine RGB values to form RGB color
     let rgbValue = (redValue << 16) | (greenValue << 8) | (blueValue)
     // publish the RGB color value with topic "LedColor"
-    client.publish("LedColor", rgbValue, 0, false );
+    client.publish("SliderTopic", rgbValue, 0, false );
   }
 
   MqttHandler {
@@ -34,6 +34,17 @@ Window {
     }
     onHumidityChanged: {
       lblHumidityValue.text = client.humidity + " %"
+    }
+    onSliderChanged: {
+      redValue    = (slider >> 16) & 0xFF;
+      greenValue  = (slider >> 8)  & 0xFF;
+      blueValue   = (slider)       & 0xFF;
+      redSlider.value = redValue;
+      greenSlider.value = greenValue;
+      blueSlider.value = blueValue
+      redSlider.text = redValue;
+      greenSlider.text = greenValue;
+      blueSlider.text = blueValue
     }
   }
 
@@ -107,18 +118,18 @@ Window {
     anchors.verticalCenter: switchLed.verticalCenter
     anchors.verticalCenterOffset: 80
     anchors.horizontalCenter: parent.horizontalCenter
-    onValueChanged: function(newValue) {
+    onCustomValueChanged: function(newValue) {
       // console.log("Red Value: ", newValue);
       redValue = newValue;
       root.changeRectangleColor();
     }
     // the following method is deprecated, we need to use the above one
     /*
-    onValueChanged: {
+    onCustomValueChanged: {
       console.log("New Value:", newValue)
     }
     */
-    onReleased: {
+    onCustomReleased: {
       root.publishMessage();
     }
   }
@@ -131,12 +142,12 @@ Window {
     anchors.verticalCenter: redSlider.verticalCenter
     anchors.verticalCenterOffset: 40
     anchors.horizontalCenter: parent.horizontalCenter
-    onValueChanged: function(newValue) {
+    onCustomValueChanged: function(newValue) {
       // console.log("Green Value: ", newValue);
       greenValue = newValue;
       root.changeRectangleColor();
     }
-    onReleased: {
+    onCustomReleased: {
       root.publishMessage();
     }
   }
@@ -149,12 +160,12 @@ Window {
     anchors.verticalCenter: greenSlider.verticalCenter
     anchors.verticalCenterOffset: 40
     anchors.horizontalCenter: parent.horizontalCenter
-    onValueChanged: function(newValue) {
+    onCustomValueChanged: function(newValue) {
       // console.log("Blue Value: ", newValue);
       blueValue = newValue;
       root.changeRectangleColor();
     }
-    onReleased: {
+    onCustomReleased: {
       root.publishMessage();
     }
   }

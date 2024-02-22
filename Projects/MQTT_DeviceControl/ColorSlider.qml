@@ -4,8 +4,11 @@ import QtQuick.Controls
 Item {
   id: root
   property color sliderColor: "#21be2b"
-  signal valueChanged(int newValue)
-  signal released()
+  property alias value: slider.value
+  property alias text: lblSliderValue.text
+
+  signal customValueChanged(int newValue)
+  signal customReleased()
 
   Column {
     id: column
@@ -43,7 +46,7 @@ Item {
       onValueChanged: {
         lblSliderValue.text = slider.value
         // emit the signal
-        root.valueChanged(slider.value)
+        root.customValueChanged(slider.value)
       }
       onPressedChanged: {
         if( pressed ) {
@@ -52,7 +55,7 @@ Item {
         else {
           // console.log("Released");
           // emit the signal
-          root.released();
+          root.customReleased();
         }
       }
     }

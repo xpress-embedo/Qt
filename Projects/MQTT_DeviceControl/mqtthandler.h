@@ -10,6 +10,8 @@ class MqttHandler : public QObject
   Q_PROPERTY(QMqttClient::ClientState state READ state WRITE setState NOTIFY stateChanged FINAL)
   Q_PROPERTY(QString temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged FINAL)
   Q_PROPERTY(QString humidity READ humidity WRITE setHumidity NOTIFY humidityChanged FINAL)
+  Q_PROPERTY(quint16 slider READ slider WRITE setSlider NOTIFY sliderChanged FINAL)
+  Q_PROPERTY(bool led READ led WRITE setLed NOTIFY ledChanged FINAL)
 public:
   explicit MqttHandler(QObject *parent = nullptr);
 
@@ -28,6 +30,12 @@ public:
   QString humidity() const;
   void setHumidity(const QString &newHumidity);
 
+  quint16 slider() const;
+  void setSlider(quint16 newSlider);
+
+  bool led() const;
+  void setLed(bool newLed);
+
 signals:
 
   void stateChanged();
@@ -36,15 +44,23 @@ signals:
 
   void humidityChanged();
 
+  void sliderChanged();
+
+  void ledChanged();
+
 private slots:
   void onConnected(void);
   void onMessageReceived(const QByteArray &message, const QMqttTopicName &topic);
 
 private:
-  QString topic1 = "SensorData";
+  QString topic1 = "SensorTopic";
+  QString topic2 = "SliderTopic";
+  QString topic3 = "LedTopic";
   QMqttClient m_client;
   QString m_temperature;
   QString m_humidity;
+  quint16 m_slider;
+  bool m_led;
 };
 
 #endif // MQTTHANDLER_H

@@ -84,6 +84,8 @@ void MqttHandler::onConnected(void)
 {
   // always subscribe after connection is successful
   m_client.subscribe(QMqttTopicFilter(topic1));
+  m_client.subscribe(QMqttTopicFilter(topic2));
+  m_client.subscribe(QMqttTopicFilter(topic3));
   qDebug() << "Connected and Subscribed to topic";
 }
 
@@ -94,6 +96,7 @@ void MqttHandler::onConnected(void)
  */
 void MqttHandler::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic)
 {
+  bool ok;
   // check if SensorData is received
   if( topic.name() == topic1 )
   {
@@ -114,6 +117,21 @@ void MqttHandler::onMessageReceived(const QByteArray &message, const QMqttTopicN
     }
   }
   // similarly we can do checks for other topics here
+  if( topic.name() == topic2 )
+  {
+    quint16 slider = message.toUInt(&ok);
+    if( ok )
+    {
+      // qDebug() << "Topic2 Received:" << slider;
+      // update the latest value, this will automatically emit the signal
+      setSlider(slider);
+    }
+  }
+
+  if( topic.name() == topic3 )
+  {
+    qDebug() << "topic3 received";
+  }
 }
 
 /**
@@ -156,4 +174,30 @@ void MqttHandler::setHumidity(const QString &newHumidity)
     return;
   m_humidity = newHumidity;
   emit humidityChanged();
+}
+
+quint16 MqttHandler::slider() const
+{
+  return m_slider;
+}
+
+void MqttHandler::setSlider(quint16 newSlider)
+{
+  if (m_slider == newSlider)
+    return;
+  m_slider = newSlider;
+  emit sliderChanged();
+}
+
+bool MqttHandler::led() const
+{
+  return m_led;
+}
+
+void MqttHandler::setLed(bool newLed)
+{
+  if (m_led == newLed)
+    return;
+  m_led = newLed;
+  emit ledChanged();
 }
