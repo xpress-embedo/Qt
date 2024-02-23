@@ -29,6 +29,7 @@ Item {
       font.pixelSize: 15
       horizontalAlignment: Text.AlignHCenter
       verticalAlignment: Text.AlignVCenter
+      color: "black"
     }
     MouseArea {
       anchors.fill: parent

@@ -30,6 +30,7 @@ Window {
 
   MqttHandler {
     id: client
+
     onTemperatureChanged: {
       lblTemperatureValue.text = client.temperature + " \u00B0C"
     }
@@ -40,12 +41,6 @@ Window {
       redValue    = (slider >> 16) & 0xFF;
       greenValue  = (slider >> 8)  & 0xFF;
       blueValue   = (slider)       & 0xFF;
-      redSlider.value = redValue;
-      greenSlider.value = greenValue;
-      blueSlider.value = blueValue
-      redSlider.text = redValue;
-      greenSlider.text = greenValue;
-      blueSlider.text = blueValue
     }
     onLedChanged: {
       switchLed.checked = led;
@@ -112,6 +107,7 @@ Window {
     antialiasing: true
     anchors.verticalCenterOffset: 80
     text: qsTr("LED Switch")
+    enabled: false
     onToggled: {
       // console.log("Toggled: ", switchLed.checked)
       if( switchLed.checked === true )
@@ -129,6 +125,7 @@ Window {
     id: redSlider
     width: root.width/2
     height: root.height/15
+    enabled: false
     sliderColor: "red"
     anchors.verticalCenter: switchLed.verticalCenter
     anchors.verticalCenterOffset: 80
@@ -151,6 +148,7 @@ Window {
     id: greenSlider
     width: root.width/2
     height: root.height/15
+    enabled: false
     sliderColor: "green"
     anchors.verticalCenter: redSlider.verticalCenter
     anchors.verticalCenterOffset: 40
@@ -173,6 +171,7 @@ Window {
     id: blueSlider
     width: root.width/2
     height: root.height/15
+    enabled: false
     sliderColor: "blue"
     anchors.verticalCenter: greenSlider.verticalCenter
     anchors.verticalCenterOffset: 40
@@ -226,6 +225,11 @@ Window {
         {
           client.connectToHost();
           // console.log("Connect with Host")
+          // enable the controls
+          redSlider.enabled = true;
+          greenSlider.enabled = true;
+          blueSlider.enabled = true;
+          switchLed.enabled = true;
         }
       }
     }
@@ -240,6 +244,11 @@ Window {
         {
           client.disconnectFromHost();
           // console.log("Disconnect with Host")
+          // disable the controls
+          redSlider.enabled = false;
+          greenSlider.enabled = false;
+          blueSlider.enabled = false;
+          switchLed.enabled = false;
         }
       }
     }

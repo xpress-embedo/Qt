@@ -38,10 +38,10 @@ Slider {
     text: parent.value
     font.pixelSize: 20
     font.bold: true
+    verticalAlignment: Text.AlignVCenter
+    anchors.leftMargin: 10
     anchors.left: bg.right
     anchors.verticalCenter: bg.verticalCenter
-    anchors.verticalCenterOffset: control.height/2 - height
-    anchors.leftMargin: 20
   }
 }
 

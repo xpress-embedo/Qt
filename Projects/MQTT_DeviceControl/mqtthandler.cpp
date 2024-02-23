@@ -183,11 +183,19 @@ void MqttHandler::setHumidity(const QString &newHumidity)
   emit humidityChanged();
 }
 
+/**
+ * @brief Get Slider Value as RGB
+ * @return Slider RGB value
+ */
 quint16 MqttHandler::slider() const
 {
   return m_slider;
 }
 
+/**
+ * @brief Set Slider new RGB Value and emit the signal
+ * @param newSlider 
+ */
 void MqttHandler::setSlider(quint16 newSlider)
 {
   if (m_slider == newSlider)
@@ -196,11 +204,19 @@ void MqttHandler::setSlider(quint16 newSlider)
   emit sliderChanged();
 }
 
+/**
+ * @brief Get LED Status
+ * @return true if on else false
+ */
 bool MqttHandler::led() const
 {
   return m_led;
 }
 
+/**
+ * @brief Set Led Status and emit the signal
+ * @param newLed 
+ */
 void MqttHandler::setLed(bool newLed)
 {
   if (m_led == newLed)
