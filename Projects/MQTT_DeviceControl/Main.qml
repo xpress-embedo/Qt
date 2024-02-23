@@ -20,7 +20,7 @@ Window {
     colorRectangle.color = Qt.rgba(redValue/255, greenValue/255, blueValue/255, 1)
   }
 
-  function publishMessage() {
+  function publishSliderTopic() {
     // console.log("Publishing Message");
     // combine RGB values to form RGB color
     let rgbValue = (redValue << 16) | (greenValue << 8) | (blueValue)
@@ -125,7 +125,7 @@ Window {
     }
   }
 
-  ColorSlider {
+  CustomSlider {
     id: redSlider
     width: root.width/2
     height: root.height/15
@@ -133,23 +133,21 @@ Window {
     anchors.verticalCenter: switchLed.verticalCenter
     anchors.verticalCenterOffset: 80
     anchors.horizontalCenter: parent.horizontalCenter
-    onCustomValueChanged: function(newValue) {
-      // console.log("Red Value: ", newValue);
-      redValue = newValue;
+    onValueChanged: {
+      redValue = value;
       root.changeRectangleColor();
     }
-    // the following method is deprecated, we need to use the above one
-    /*
-    onCustomValueChanged: {
-      console.log("New Value:", newValue)
-    }
-    */
-    onCustomReleased: {
-      root.publishMessage();
+    onPressedChanged: {
+      if( pressed ) {
+        // console.log("Pressed")
+      }
+      else {
+        root.publishSliderTopic();
+      }
     }
   }
 
-  ColorSlider {
+  CustomSlider {
     id: greenSlider
     width: root.width/2
     height: root.height/15
@@ -157,17 +155,21 @@ Window {
     anchors.verticalCenter: redSlider.verticalCenter
     anchors.verticalCenterOffset: 40
     anchors.horizontalCenter: parent.horizontalCenter
-    onCustomValueChanged: function(newValue) {
-      // console.log("Green Value: ", newValue);
-      greenValue = newValue;
+    onValueChanged: {
+      greenValue = value;
       root.changeRectangleColor();
     }
-    onCustomReleased: {
-      root.publishMessage();
+    onPressedChanged: {
+      if( pressed ) {
+        // console.log("Pressed")
+      }
+      else {
+        root.publishSliderTopic();
+      }
     }
   }
 
-  ColorSlider {
+  CustomSlider {
     id: blueSlider
     width: root.width/2
     height: root.height/15
@@ -175,13 +177,17 @@ Window {
     anchors.verticalCenter: greenSlider.verticalCenter
     anchors.verticalCenterOffset: 40
     anchors.horizontalCenter: parent.horizontalCenter
-    onCustomValueChanged: function(newValue) {
-      // console.log("Blue Value: ", newValue);
-      blueValue = newValue;
+    onValueChanged: {
+      blueValue = value;
       root.changeRectangleColor();
     }
-    onCustomReleased: {
-      root.publishMessage();
+    onPressedChanged: {
+      if( pressed ) {
+        // console.log("Pressed")
+      }
+      else {
+        root.publishSliderTopic();
+      }
     }
   }
 
