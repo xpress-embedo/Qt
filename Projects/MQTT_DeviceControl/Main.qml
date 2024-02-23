@@ -17,6 +17,7 @@ Window {
   property int blueValue: 128
 
   function changeRectangleColor() {
+    // console.log("Color, Red:", redValue, ", Green:", greenValue, ", Blue:", blueValue);
     colorRectangle.color = Qt.rgba(redValue/255, greenValue/255, blueValue/255, 1)
   }
 
@@ -41,6 +42,7 @@ Window {
       redValue    = (slider >> 16) & 0xFF;
       greenValue  = (slider >> 8)  & 0xFF;
       blueValue   = (slider)       & 0xFF;
+      // console.log("MQTT, Red:", redValue, ", Green:", greenValue, ", Blue:", blueValue);
     }
     onLedChanged: {
       switchLed.checked = led;

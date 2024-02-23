@@ -119,7 +119,7 @@ void MqttHandler::onMessageReceived(const QByteArray &message, const QMqttTopicN
   // similarly we can do checks for other topics here
   if( topic.name() == topic2 )
   {
-    quint16 slider = message.toUInt(&ok);
+    quint32 slider = message.toUInt(&ok);
     if( ok )
     {
       // qDebug() << "Topic2 Received:" << slider;
@@ -187,7 +187,7 @@ void MqttHandler::setHumidity(const QString &newHumidity)
  * @brief Get Slider Value as RGB
  * @return Slider RGB value
  */
-quint16 MqttHandler::slider() const
+quint32 MqttHandler::slider() const
 {
   return m_slider;
 }
@@ -196,7 +196,7 @@ quint16 MqttHandler::slider() const
  * @brief Set Slider new RGB Value and emit the signal
  * @param newSlider 
  */
-void MqttHandler::setSlider(quint16 newSlider)
+void MqttHandler::setSlider(quint32 newSlider)
 {
   if (m_slider == newSlider)
     return;
