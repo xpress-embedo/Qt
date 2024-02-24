@@ -11,22 +11,19 @@ Item {
 
   signal clicked()
 
-  width: 80
-  height: 40
-
   Rectangle {
     id: body
     anchors.fill: parent
     color: root.colorNormal
     border.color: root.colorBorder
     border.width: 0.5
-    radius: width/10
+    // radius: width/10
     Label {
       id: lblBody
       // text: "Hello"
       text: root.buttonText
       anchors.fill: parent
-      font.pixelSize: 15
+      font.pixelSize: 14
       horizontalAlignment: Text.AlignHCenter
       verticalAlignment: Text.AlignVCenter
       color: "black"

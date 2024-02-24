@@ -6,8 +6,8 @@ import com.company.mqtthandler 1.0
 
 Window {
   id: root
-  width: 480
-  height: 640
+  width: 300
+  height: 600
   visible: true
   color: "#ffffff"
   title: qsTr("MQTT Device Control")
@@ -53,8 +53,8 @@ Window {
     id: row1
     width: root.width/2
     height: root.height/10
-    anchors.top: colConnectDisconnect.bottom
-    anchors.topMargin: 40
+    anchors.top: btnConnect.bottom
+    anchors.topMargin: 30
     anchors.horizontalCenter: parent.horizontalCenter
     spacing: 10
     Column {
@@ -98,7 +98,6 @@ Window {
       }
     }
   }
-
 
   CustomSwitch {
     id: switchLed
@@ -194,67 +193,62 @@ Window {
 
   Rectangle {
     id: colorRectangle
-    width: root.width/2
-    height: root.height/8
+    width: root.width/3
+    height: width
     anchors.verticalCenter: blueSlider.verticalCenter
     anchors.verticalCenterOffset: 80
     anchors.horizontalCenter: parent.horizontalCenter
     border.color: "black"
+    radius: width
   }
 
-  Row {
-    id: colConnectDisconnect
-    spacing: 40
-    width: root.width/2
+  CustomButton {
+    id: btnConnect
+    width: 90
+    height: 40
+    anchors.left: parent.left
     anchors.top: parent.top
-    bottomPadding: 0
-    padding: 10
-    leftPadding: 0
-    rightPadding: 0
-    topPadding: 0
-    antialiasing: true
-    layoutDirection: Qt.LeftToRight
-    anchors.topMargin: 40
-    anchors.horizontalCenter: parent.horizontalCenter
-
-    CustomButton {
-      id: btnConnect
-      width: 100
-      height: 40
-      buttonText: "Connect"
-      onClicked: {
-        if( client.state !== MqttHandler.Connected )
-        {
-          client.connectToHost();
-          // console.log("Connect with Host")
-          // enable the controls
-          redSlider.enabled = true;
-          greenSlider.enabled = true;
-          blueSlider.enabled = true;
-          switchLed.enabled = true;
-        }
-      }
-    }
-
-    CustomButton {
-      id: btnDisconnect
-      width: 100
-      height: 40
-      buttonText: "Disconnect"
-      onClicked: {
-        if( client.state === MqttHandler.Connected )
-        {
-          client.disconnectFromHost();
-          // console.log("Disconnect with Host")
-          // disable the controls
-          redSlider.enabled = false;
-          greenSlider.enabled = false;
-          blueSlider.enabled = false;
-          switchLed.enabled = false;
-        }
+    anchors.topMargin: root.height/20
+    anchors.leftMargin: root.width/6
+    buttonText: "Connect"
+    onClicked: {
+      if( client.state !== MqttHandler.Connected )
+      {
+        client.connectToHost();
+        // console.log("Connect with Host")
+        // enable the controls
+        redSlider.enabled = true;
+        greenSlider.enabled = true;
+        blueSlider.enabled = true;
+        switchLed.enabled = true;
       }
     }
   }
+
+  CustomButton {
+    id: btnDisconnect
+    width: 90
+    height: 40
+    anchors.right: parent.right
+    anchors.top: parent.top
+    anchors.topMargin: root.height/20
+    anchors.rightMargin: root.width/6
+    buttonText: "Disconnect"
+    onClicked: {
+      if( client.state === MqttHandler.Connected )
+      {
+        client.disconnectFromHost();
+        // console.log("Disconnect with Host")
+        // disable the controls
+        redSlider.enabled = false;
+        greenSlider.enabled = false;
+        blueSlider.enabled = false;
+        switchLed.enabled = false;
+      }
+    }
+  }
+
+
 
   Component.onCompleted: {
     root.changeRectangleColor();
