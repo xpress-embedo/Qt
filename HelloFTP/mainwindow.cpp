@@ -93,8 +93,8 @@ void MainWindow::downloadFromFTP()
     QChart *chartData1 = new QChart();
     QChart *chartData2 = new QChart();
 
-    QChartView *chartViewData1 = new QChartView();
-    QChartView *chartViewData2 = new QChartView();
+    QChartView *chartViewData1 = new QChartView(chartData1);
+    QChartView *chartViewData2 = new QChartView(chartData2);
 
     // Data1 Plotting
     chartData1->legend()->hide();
