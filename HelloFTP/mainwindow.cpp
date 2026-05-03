@@ -29,9 +29,9 @@ void MainWindow::downloadFromFTP()
   {
     "--ftp-ssl",
     "--insecure",
-    "ftp://xpress:embedo@localhost/ftpserver/hello.txt",
+    "ftp://xpress:embedo@localhost/ftpserver/logs.txt",
     "-o",
-    "downloaded.txt"
+    "logs.txt"
   };
 
   QProcess process;

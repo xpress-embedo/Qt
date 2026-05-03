@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
   ui->setupUi(this);
 
   // Open the file
-  QFile file("D:\\Projects\\Qt Projects\\QT\\QtCharts\\02-SubplotUsingOfflineData\\data.txt");
+  QFile file("D:\\Projects\\Qt-Projects\\QT\\QtCharts\\02-SubplotUsingOfflineData\\data.txt");
 
   if( !file.open(QIODevice::ReadOnly) )
   {
