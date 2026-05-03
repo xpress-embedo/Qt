@@ -116,7 +116,7 @@ void MainWindow::downloadFromFTP()
     QValueAxis *axisYdata1 = new QValueAxis;
     axisYdata1->setLabelFormat("%i");
     axisYdata1->setTitleText("RAW Counts");
-    axisYdata1->setRange(0, 255);
+    axisYdata1->setRange(0, 100);
     chartData1->addAxis(axisYdata1, Qt::AlignLeft);
     data1->attachAxis(axisYdata1);
 
@@ -142,8 +142,38 @@ void MainWindow::downloadFromFTP()
 
     chartData2->setTitle("FTP Server Data-2");
 
-    // Layout
-    QVBoxLayout *layout = new QVBoxLayout(ui->PlotWidget);
+    // Layout refresh strategy (important):
+    // 1) PlotWidget must have only ONE layout for its lifetime.
+    // 2) On each button click, we clear old chart widgets from that layout.
+    // 3) Then we add new chart views with fresh data.
+    // This avoids: "QLayout: Attempting to add QLayout ... already has a layout".
+
+    // Here we are checking if layout already exist or not, if not exist i.e. during
+    // the first time, it creates the layout, and if layout is already created
+    // then in the below while loop, the layout is cleared
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout*>(ui->PlotWidget->layout());
+    if (!layout)
+    {
+      // First run only: create and configure the layout once.
+      layout = new QVBoxLayout(ui->PlotWidget);
+      layout->setContentsMargins(0, 0, 0, 0);
+      layout->setSpacing(8);
+      ui->PlotWidget->setLayout(layout);
+    }
+
+    // Remove previously shown charts before adding new ones.
+    // takeAt(0) pops one layout item at a time until layout is empty.
+    while (QLayoutItem *item = layout->takeAt(0))
+    {
+      if (item->widget())
+      {
+        // Widgets are QObject-owned by parent; deleteLater is safe in UI code.
+        item->widget()->deleteLater();
+      }
+      // Delete the layout item container itself (not the widget).
+      delete item;
+    }
+
     chartViewData1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     chartViewData2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     layout->addWidget(chartViewData1, 1);
