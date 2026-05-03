@@ -16,11 +16,6 @@
 MainWindow::MainWindow(QWidget *parent)  : QMainWindow(parent)  , ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-
-  // Keep the plot area dominant and button compact.
-  ui->verticalLayout->setStretch(0, 1);
-  ui->verticalLayout->setStretch(1, 0);
-  ui->btnDownload->setFixedHeight(34);
 }
 
 MainWindow::~MainWindow()
@@ -111,7 +106,9 @@ void MainWindow::downloadFromFTP()
     // chartAdc->createDefaultAxes();
     QDateTimeAxis *axisXdata1 = new QDateTimeAxis;
     axisXdata1->setTickCount(10);
-    axisXdata1->setFormat("yyyy-MM-dd hh:mm:ss");
+    // To also display date use the comment line and comment the next line
+    // axisXdata1->setFormat("yyyy-MM-dd hh:mm:ss");
+    axisXdata1->setFormat("hh:mm:ss");
     axisXdata1->setTitleText("Time Axis");
     chartData1->addAxis(axisXdata1, Qt::AlignBottom);
     data1->attachAxis(axisXdata1);
@@ -138,7 +135,7 @@ void MainWindow::downloadFromFTP()
 
     QValueAxis *axisYdata2 = new QValueAxis;
     axisYdata2->setLabelFormat("%i");
-    axisYdata2->setTitleText("Temperature Value");
+    axisYdata2->setTitleText("RAW Counts");
     axisYdata2->setRange(0, 100);
     chartData2->addAxis(axisYdata2, Qt::AlignLeft);
     data2->attachAxis(axisYdata2);
@@ -146,24 +143,7 @@ void MainWindow::downloadFromFTP()
     chartData2->setTitle("FTP Server Data-2");
 
     // Layout
-    QVBoxLayout *layout = qobject_cast<QVBoxLayout*>(ui->PlotWidget->layout());
-    if (!layout)
-    {
-      layout = new QVBoxLayout(ui->PlotWidget);
-      layout->setContentsMargins(0, 0, 0, 0);
-      layout->setSpacing(8);
-      ui->PlotWidget->setLayout(layout);
-    }
-
-    while (QLayoutItem *item = layout->takeAt(0))
-    {
-      if (item->widget())
-      {
-        item->widget()->deleteLater();
-      }
-      delete item;
-    }
-
+    QVBoxLayout *layout = new QVBoxLayout(ui->PlotWidget);
     chartViewData1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     chartViewData2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     layout->addWidget(chartViewData1, 1);
