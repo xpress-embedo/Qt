@@ -16,6 +16,11 @@
 MainWindow::MainWindow(QWidget *parent)  : QMainWindow(parent)  , ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
+
+  // Keep the plot area dominant and button compact.
+  ui->verticalLayout->setStretch(0, 1);
+  ui->verticalLayout->setStretch(1, 0);
+  ui->btnDownload->setFixedHeight(34);
 }
 
 MainWindow::~MainWindow()
@@ -141,13 +146,33 @@ void MainWindow::downloadFromFTP()
     chartData2->setTitle("FTP Server Data-2");
 
     // Layout
-    QVBoxLayout *layout = new QVBoxLayout(ui->PlotWidget);
-    layout->addWidget(chartViewData1);
-    layout->addWidget(chartViewData2);
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout*>(ui->PlotWidget->layout());
+    if (!layout)
+    {
+      layout = new QVBoxLayout(ui->PlotWidget);
+      layout->setContentsMargins(0, 0, 0, 0);
+      layout->setSpacing(8);
+      ui->PlotWidget->setLayout(layout);
+    }
+
+    while (QLayoutItem *item = layout->takeAt(0))
+    {
+      if (item->widget())
+      {
+        item->widget()->deleteLater();
+      }
+      delete item;
+    }
+
+    chartViewData1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    chartViewData2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    layout->addWidget(chartViewData1, 1);
+    layout->addWidget(chartViewData2, 1);
+    layout->setStretch(0, 1);
+    layout->setStretch(1, 1);
     chartViewData1->setRenderHint(QPainter::Antialiasing);
     chartViewData2->setRenderHint(QPainter::Antialiasing);
-    // this->setLayout( layout );
-    ui->PlotWidget->setLayout( layout );
+
     /* Note: why I didn't used
     * QVBoxLayout *layout = new QVBoxLayout(ui->centralwidget);
     * this->setLayout( layout );
