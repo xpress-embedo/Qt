@@ -6,15 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>200</width>
-    <height>150</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>FTP Data Visualizer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QWidget" name="PlotWidget" native="true"/>
+    </item>
     <item>
      <widget class="QPushButton" name="btnDownload">
       <property name="text">
@@ -29,7 +32,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>200</width>
+     <width>800</width>
      <height>21</height>
     </rect>
    </property>
