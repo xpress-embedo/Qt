@@ -25,12 +25,13 @@ void MainWindow::on_btnDownload_clicked()
 void MainWindow::downloadFromFTP()
 {
   QString program = "C:/Windows/System32/curl.exe";
-  QStringList arguments = {
-      "--ftp-ssl",
-      "--insecure",
-      "ftp://xpress:embedo@localhost/ftpserver/hello.txt",
-      "-o",
-      "downloaded.txt"
+  QStringList arguments =
+  {
+    "--ftp-ssl",
+    "--insecure",
+    "ftp://xpress:embedo@localhost/ftpserver/hello.txt",
+    "-o",
+    "downloaded.txt"
   };
 
   QProcess process;
