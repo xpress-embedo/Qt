@@ -27,18 +27,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnDownload_clicked()
 {
-  if ( data1 != nullptr )
-  {
-    // If data series already exist, clear them before downloading new data.
-    data1->clear();
-    data2->clear();
-  }
-  else
-  {
-    // First time initialization of data series.
-    data1 = new QLineSeries();
-    data2 = new QLineSeries();
-  }
+  // Always use fresh series for this run.
+  // Do not delete old ones here; old chart/widget cleanup handles previous ownership. 
+  data1 = new QLineSeries();
+  data2 = new QLineSeries();
 
   this->downloadFromFTP();
 }
@@ -178,6 +170,13 @@ void MainWindow::downloadFromFTP()
   }
   else
   {
+    // Safety Guard: Ensure data series are initialized before appending data points.
+    if ( data1 == nullptr || data2 == nullptr )
+    {
+      qDebug() << "Series not initialized";
+      return;
+    }
+
     // We are here because file is present
     QTextStream stream(&file);
     QDateTime datetime = QDateTime::currentDateTime();
