@@ -35,7 +35,7 @@ Window {
 
     onClicked: {
       console.log("Download from FTP Started")
-      ftpManager.downloadData()
+      ftpManager.downloadFTPData()
     }
   }
 }

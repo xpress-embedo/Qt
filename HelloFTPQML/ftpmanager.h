@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QQmlEngine>
+#include <QLineSeries>
 
 class FTPManager : public QObject
 {
@@ -11,10 +12,13 @@ class FTPManager : public QObject
 public:
   explicit FTPManager(QObject *parent = nullptr);
 
-  Q_INVOKABLE void downloadData();
+  Q_INVOKABLE void downloadFTPData();
 
 signals:
 
+private:
+  QLineSeries *m_data1 = nullptr;
+  QLineSeries *m_data2 = nullptr;
 };
 
 #endif // FTPMANAGER_H
