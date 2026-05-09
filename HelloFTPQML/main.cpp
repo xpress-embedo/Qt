@@ -1,4 +1,4 @@
-#include <QGuiApplication>
+#include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "ftpmanager.h"
@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication app(argc, argv);
+  QApplication app(argc, argv);
 
   QQmlApplicationEngine engine;
   FTPManager ftpManager;
