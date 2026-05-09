@@ -11,6 +11,8 @@ class FTPManager : public QObject
 public:
   explicit FTPManager(QObject *parent = nullptr);
 
+  Q_INVOKABLE void downloadData();
+
 signals:
 
 };
