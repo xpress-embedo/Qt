@@ -88,8 +88,8 @@ Window {
       LineSeries {
         id: lineSeriesData2
         name: "Data-2 Values"
-        axisX: axisXdata1
-        axisY: axisYdata1
+        axisX: axisXdata2
+        axisY: axisYdata2
       }
     }
 
