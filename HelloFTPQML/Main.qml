@@ -13,12 +13,13 @@ Window {
 
   Column {
     anchors.centerIn: parent
-    spacing: 18
+    anchors.margins: 5
+    spacing: 5
 
     ChartView {
       id: chartData1
-      width: 560
-      height: 220
+      width: 600
+      height: 320
       title: "Date"
       titleFont.bold: true
       titleFont.pointSize: 12
@@ -56,8 +57,8 @@ Window {
 
     ChartView {
       id: chartData2
-      width: 560
-      height: 220
+      width: 600
+      height: 320
       title: "Date"
       titleFont.bold: true
       titleFont.pointSize: 12
@@ -68,7 +69,7 @@ Window {
         max: 100
         gridVisible: true
         tickCount: 7
-        titleText: "Data-1 Values"
+        titleText: "Data-2 Values"
         titleFont.bold: true
         titleFont.pointSize: 10
         titleFont.italic: true
@@ -99,6 +100,7 @@ Window {
       height: 44
       text: qsTr("Download FTP Data")
       anchors.horizontalCenter: parent.horizontalCenter
+      anchors.topMargin: 10
       font.pixelSize: 14
       onClicked: {
         console.log("Download clicked")
