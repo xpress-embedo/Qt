@@ -18,8 +18,8 @@ Window {
 
     ChartView {
       id: chartData1
-      width: 600
-      height: 320
+      width: window.width - 40
+      height: (window.height - anchors.margins * 2 - btnDownloadFTP.height - 30) / 2
       title: "Date"
       titleFont.bold: true
       titleFont.pointSize: 12
@@ -57,8 +57,8 @@ Window {
 
     ChartView {
       id: chartData2
-      width: 600
-      height: 320
+      width: window.width - 40
+      height: (window.height - anchors.margins * 2 - btnDownloadFTP.height - 30) / 2
       title: "Date"
       titleFont.bold: true
       titleFont.pointSize: 12
