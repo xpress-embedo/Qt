@@ -17,13 +17,16 @@ void FTPManager::downloadFTPData()
   m_series1.clear();
   m_series2.clear();
 
+  // Download Command Line
+  // curl --ftp-ssl --insecure ftp://abc:abc@localhost/ftp/logs.txt
+
   // Download the data from the FTP server
   QString program = "C:/Windows/System32/curl.exe";
   QStringList arguments =
   {
     "--ftp-ssl",
     "--insecure",
-    "ftp://xpress:embedo1@localhost/ftpserver/logs.txt",
+    "ftp://abc:abc@localhost/ftp/logs.txt",
     "-o",
     "logs.txt"
   };
