@@ -10,6 +10,8 @@ qt_standard_project_setup(REQUIRES 6.10)
 
 qt_add_executable(appFolderFilesTreeView
     main.cpp
+    FileTreeModel.cpp
+    FileTreeModel.h
 )
 
 qt_add_qml_module(appFolderFilesTreeView
@@ -31,6 +33,10 @@ set_target_properties(appFolderFilesTreeView PROPERTIES
 
 target_link_libraries(appFolderFilesTreeView
     PRIVATE Qt6::Quick
+)
+
+target_compile_definitions(appFolderFilesTreeView
+    PRIVATE SAMPLE_DATA_PATH="${CMAKE_CURRENT_SOURCE_DIR}/SampleData"
 )
 
 install(TARGETS appFolderFilesTreeView
